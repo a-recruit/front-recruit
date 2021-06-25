@@ -4,5 +4,7 @@ module.exports = app => {
 
     app.get("/test",user.test);
 
+    app.post("/ajout",user.addData);
+
   
 };

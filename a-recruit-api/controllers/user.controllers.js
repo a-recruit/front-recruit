@@ -11,7 +11,31 @@ exports.test = (req,res)=>{
           err.message || "Une erreur pendant le test de la base de donnée."
       });
 
-    }else res.json(data);
+    }else res.json(data.rows);
+
+  });
+
+}
+
+exports.addData = (req,res)=>{
+
+  const newUser = new User({
+    id: req.body.id,
+    name:req.body.name,
+    firstname: req.body.firstname,
+    mail: req.body.mail,
+  });
+
+  User.addData(newUser,(err, data) => {
+
+    if (err){
+
+      res.status(500).json({
+        message:
+          err.message || "Une erreur pendant l'ajout à la base de donnée"
+      });
+
+    }else res.json(data.rows);
 
   });
 
