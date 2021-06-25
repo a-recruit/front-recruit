@@ -1,0 +1,161 @@
+.show_hide_layout{
+    max-width: 95%;
+    margin: 2em auto;
+    background-color: #fff;
+    box-shadow: 2px 2px 2px #ccc;
+    padding: 5px;
+    padding-left: var(--font-M);
+    padding-right: var(--font-M);
+    min-height: 3em;
+}
+
+
+
+.underline{
+    border-top: 1px solid #ccc;
+}
+
+.show_hide_layout .right{
+    width: 20%;
+    background-color: red;
+    max-height: 40px;
+}
+
+.head{
+    min-height: 40px;
+}
+
+.bottom5{
+    margin-bottom: 5px;
+}
+
+.register_todo {
+    width: 100%;
+    height: 40px;
+
+}
+
+.register_todo label{
+    text-align: left;
+    align-items: center;
+    width: 10em;
+}
+
+.register_todo input,.form_select{
+    outline: none;
+    border: none;
+    height: 20px;
+    background-color: rgba(204, 204, 204, 0.357);
+    margin-left: var(--font-M);
+    padding-left: var(--font-M);
+    padding-right: var(--font-M);
+    font-size: var(--font-S);
+    width: 15em;
+}
+
+.files{
+    margin-top: 5px;
+}
+.files input,.files label{
+    width: 100%;
+    text-align: left;
+    align-items: flex-start;
+    height: 30px;
+}
+
+.calendrier{
+    width: 30%;
+}
+
+.demandes_head{
+    font-size: var(--font-XS);
+    font-weight: 900;
+    color: var(--color-primary-light);
+}
+
+.demande{
+    border: 1px solid #ccc;
+    padding: 0.5em;
+}
+
+.demande label,.demande div{
+    font-size: var(--font-XS);
+}
+
+.more {
+    margin-left: var(--font-M);
+    font-size: var(--font-XS);
+    cursor: pointer;
+}
+
+.more a{
+    text-decoration: none;
+
+}
+
+.more_btn{
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background-color: var(--color-primary-light);
+    color: #fff;
+    font-weight: 900;
+    font-size: 4em;
+}
+
+@media screen and (max-width:900px){
+
+    .new_demande{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .calendrier{
+        display: flex;
+        width: 80%;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width:500px){
+    .show_hide_layout div{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0.3em;
+    }
+    .demandes_link{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .register_todo_container .register_todo{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .register_todo_container .register_todo{
+        margin-bottom: 10px;
+    }
+
+    .register_todo div{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: left;
+        width: 100%;
+        align-items: flex-start;
+    }
+    .register_todo_container .underline{
+        padding-top: var(--font-M);
+    }
+    .statut{
+        position: absolute;
+        right: 0;
+    }
+
+
+}
