@@ -1,5 +1,6 @@
 const User = require("../models/user.models.js");
 
+
 exports.test = (req,res)=>{
 
   User.test((err, data) => {
@@ -17,6 +18,28 @@ exports.test = (req,res)=>{
 
 }
 
+
+exports.addData =  (req, res) => {
+
+  const newUser = new User ({
+     id: req.body.id,
+     name: req.body.name,
+     firstname : req.body.firstname,
+     mail: req.body.mail
+  });
+
+  
+
+  User.addData(newUser,(err, data) => 
+{
+  if(err) {
+    res.status(500).json({
+      message: err.message || "Prince il est pas gentil"
+    });
+  }else res.json(data)
+})
+
+}
 
 
 

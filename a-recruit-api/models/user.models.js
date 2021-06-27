@@ -2,14 +2,30 @@ const psql = require("../configs/db.js");
 
 // constructor
 const User = function(user) {
-  this.user_email = user.user_email;
-  this.user_name = user.user_name;
-  this.user_password = user.user_password;
+  this.id = user.id;
+  this.name = user.name;
+  this.firstname = user.firstname;
+  this.mail = user.mail;
 };
+
+
 
 User.test = (result)=>{
 
   psql.query("SELECT * FROM public.yohann ", (err, res) => {
+    
+    if (err) {
+      result(err, null);
+      return;
+    }
+    result(null,res);
+  });
+}
+
+User.addData = (newuser, result)=> {
+
+  psql.query("INSERT INTO yohann (id, name, firstname, mail) VALUES ($1, $2, $3, $4)",
+  [newuser.id, newuser.name, newuser.firstname, newuser.mail], (err, res) => {
     
     if (err) {
       result(err, null);
