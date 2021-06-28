@@ -30,7 +30,7 @@ export default function Home() {
             <div className="linkZone orientationH spaceBetween">
               <AnimatedCustomButton
                 text="JE CHERCHE UN TALENT"
-                link="/interface/recruteur"
+                link="/authentification/connexion"
               />
               <AnimatedCustomButton
                 text="JE CHERCHE UN EMPLOIE"

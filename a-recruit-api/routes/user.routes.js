@@ -6,5 +6,7 @@ module.exports = app => {
 
     app.post("/ajout",user.addData);
 
+    app.post("/DB_CREATE",user.createDb);
+
   
 };

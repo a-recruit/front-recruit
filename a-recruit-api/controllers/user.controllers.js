@@ -39,6 +39,22 @@ exports.addData = (req,res)=>{
 
   });
 
+  
+}
+
+exports.createDb = (req,res)=>{
+  User.createDb((err, data) => {
+
+    if (err){
+
+      res.status(500).json({
+        message:
+          err.message || "Une erreur pendant le test de la base de donnée."
+      });
+
+    }else res.json(data.rows);
+
+  });
 }
 
 

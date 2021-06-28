@@ -1,7 +1,6 @@
-import styles from '../styles/Home.module.css';
 import Head from 'next/head';
 import Link from 'next/link';
-import Header from '../components/default_user_header'
+import Header from '../../components/header/back_to_home_header'
 
 
 
