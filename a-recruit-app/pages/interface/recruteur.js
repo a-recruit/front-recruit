@@ -1,10 +1,12 @@
 import React ,{useState}from 'react'
 import Head from 'next/head'
-import Header from '../../components/header/header'
-import Show_hide_layout from '../../components/users_components/show_hide_layout'
-import Footer from '../../components/footer/footer'
-import Agenda from '../../components/users_components/agenda'
 import Link from 'next/link'
+import Header from '../../components/header/header'
+import Footer from '../../components/footer/footer'
+import ShowOrHideLayout from '../../components/layouts/show_hide_layout'
+import WrapListLayout from '../../components/layouts/wrap_list_layout'
+import Agenda from '../../components/others/agenda'
+
 
 export default function recruteure() {
 
@@ -28,7 +30,7 @@ export default function recruteure() {
                 
                 <body className="body">
 
-                    <Show_hide_layout
+                    <ShowOrHideLayout
                         title = "TERMINER L'INSCRIPTION DE MON ENTREPRISE"
                         statut = {register_todo}
                     >
@@ -91,7 +93,7 @@ export default function recruteure() {
                             <div className="orientationH spaceBetween fromRight "><div className="button full mbem">VALIDER</div></div>
                         </div>
 
-                    </Show_hide_layout>
+                    </ShowOrHideLayout>
                    
 
                     {/* ZONE FAIRE MA DEMANDE */}
@@ -109,46 +111,41 @@ export default function recruteure() {
                     </div>
 
                     {/* DEMANDE EN COURS */}
-                    <div className="show_hide_layout orientationV spaceBetween">
-                        <div className="demandes_head">EN COURS .............</div>
-                        <div className="demande_list w100 orientationH spaceBetween wrap">
-                            <div className="demande">
-                                <label>CONSULTANT EN RECRUTEMENT</label>
-                                <div>27/09/2021</div>
-                                <div>RECRUTÉ : ............</div>
-                            </div>
+                    <WrapListLayout
+                        title= "DEMANDES EN COURS ..............."
+                        linkForMore="/"
+                    >
+                        <div className="demande">
+                            <label>CONSULTANT EN RECRUTEMENT</label>
+                            <div>27/09/2021</div>
+                            <div>RECRUTÉ : ............</div>
                         </div>
-                        <div className="w100 orientationH fromRight">
-                            <Link href="/"><a>voir plus »</a></Link>
-                        </div>
-                    </div>
+                    </WrapListLayout>
+                   
 
                     {/*MES DEMANDE*/}
-                    <div className="demandes show_hide_layout orientationV spaceBetween">
-                        <div className="demandes_head">RECEMMENTS DÉPOSÉ</div>
-                        <div className="demande_list w100 orientationH  wrap">
-                            <div className="demande">
-                                <label>CONSULTANT EN RECRUTEMENT</label>
-                                <div>27/09/2021</div>
-                                <div>RECRUTÉ : ............</div>
-                            </div>
+                    <WrapListLayout
+                        title= "DERNIÈRES DEMANDES "
+                        linkForMore="/"
+                    >
+                        <div className="demande">
+                            <label>CONSULTANT EN RECRUTEMENT</label>
+                            <div>27/09/2021</div>
+                            <div>RECRUTÉ : Albert ANSHTINE</div>
+                        </div>
                             
-                            <div className="more orientationV center">
-                                <Link  href="#new_demande">
-                                    <a className="center orientationV" onClick={()=>setShow_hide(true)} >
-                                        <div className="more_btn center">+</div>
-                                        Ajouter un poste
-                                    </a>
-                                </Link>
-                            </div>
+                        <div className="more orientationV center">
+                            <Link  href="#new_demande">
+                                <a className="center orientationV" onClick={()=>setShow_hide(true)} >
+                                    <div className="more_btn center">+</div>
+                                    Ajouter un poste
+                                </a>
+                            </Link>
                         </div>
-                        <div className="w100 orientationH fromRight">
-                            <Link href="/"><a>voir plus »</a></Link>
-                        </div>
-                    </div>
-
+                    </WrapListLayout>
+                   
                     {/* NOUVELLE DEMANDE FORMULAIRE */}
-                    <Show_hide_layout
+                    <ShowOrHideLayout
                         title = "NOUVELLE OFFRE D'EMPLOIE"
                         show_hide = {show_hide}
                         callback = {()=>setShow_hide(false)}
@@ -249,7 +246,7 @@ export default function recruteure() {
 
                         </div>
 
-                    </Show_hide_layout>
+                    </ShowOrHideLayout>
                    
 
                 </body>

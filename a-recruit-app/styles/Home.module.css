@@ -30,6 +30,7 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  font-size: var(--font-XXS);
 }
 
 .footer a {

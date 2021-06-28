@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 
 export default function header() {
@@ -9,7 +10,11 @@ export default function header() {
     return (
         <>
             <div className="header orientationH spaceBetween">
-                <img className="h_logo" src="/images/A_Recruit.jpg" alt="LOGO"/>
+                <Link href="/">
+                    <a>
+                        <img className="h_logo" src="/images/A_Recruit.jpg" alt="LOGO"/>
+                    </a>
+                </Link>
                 <div className="orientationH ">
                     <div className="notification_z">
                         <img className="icon" src="/images/icon_notification.png" alt='noti_icon'/>

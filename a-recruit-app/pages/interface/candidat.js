@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import Menu from '../../components/menu_candidat'
+import Menu from '../../components/header/header'
 
 export default function candidat() {
     return (
