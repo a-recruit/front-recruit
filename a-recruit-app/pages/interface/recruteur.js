@@ -26,230 +26,228 @@ export default function recruteure() {
             <Header/>
             {/*---------------*/}
             
-            <main>
-                
-                <body className="body">
-
-                    <ShowOrHideLayout
-                        title = "TERMINER L'INSCRIPTION DE MON ENTREPRISE"
-                        statut = {register_todo}
-                    >
-                        <div className="register_todo_container">
-                            <div className="underline register_todo w100 orientationH spaceBetween center">
-                                <div className="orientationH center">
-                                    <label>Nom de l'entreprise :</label><input type="text" name="ent_name"/>
-                                </div>
-                                <div className="status">f</div>
-                            </div>
-
-                            <div className="register_todo w100 orientationH spaceBetween center">
-                                <div className="orientationH center">
-                                    <label>Qualité du signataire :</label><input type="text" name="ent_name"/>
-                                </div>
-                                <div className="status">f</div>
-                            </div>
-                            <div className="register_todo w100 orientationH spaceBetween center">
-                                <div className="orientationH center">
-                                    <label>RCS + Ville :</label><input type="text" name="ent_name"/>
-                                </div>
-                                <div className="status">f</div>
-                            </div>
-                            <div className="register_todo w100 orientationH spaceBetween center">
-                                <div className="orientationH center">
-                                    <label>Tel :</label><input type="text" name="ent_name"/>
-                                </div>
-                                <div className="status">f</div>
-                            </div>
-                            <div className="register_todo w100 orientationH spaceBetween center">
-                                <div className="orientationH center">
-                                    <label>Mail :</label><input type="text" name="ent_name"/>
-                                </div>
-                                <div className="status">f</div>
-                            </div>
-                            <div className="register_todo w100 orientationH spaceBetween center">
-                                <div className="orientationH center">
-                                    <label>Siège social :</label><input type="text" name="ent_name"/>
-                                </div>
-                                <div className="status">f</div>
-                            </div>
-                            <div className="register_todo w100 orientationH spaceBetween center">
-                                <div className="orientationH center">
-                                    <label>Code postal :</label><input type="text" name="ent_name"/>
-                                </div>
-                                <div className="status">f</div>
-                            </div>
-                            <div className="register_todo w100 orientationH spaceBetween center">
-                                <div className="orientationH center">
-                                    <label>Ville :</label><input type="text" name="ent_name"/>
-                                </div>
-                                <div className="status">f</div>
-                            </div>
-                            <div className="register_todo w100 orientationH spaceBetween center">
-                                <div className="orientationH center">
-                                    <label>Pays :</label><input type="text" name="ent_name"/>
-                                </div>
-                                <div className="status">f</div>
-                            </div> 
-                            <div className="orientationH spaceBetween fromRight "><div className="button full mbem">VALIDER</div></div>
-                        </div>
-
-                    </ShowOrHideLayout>
+            <main className="body">
                    
 
-                    {/* ZONE FAIRE MA DEMANDE */}
-                    <div className="show_hide_layout orientationH spaceBetween center demandes_link">
-                        <div className="orientationH center"><label className="label">FAIRE MA DEMANDE</label></div>
-                        <div className="orientationH ">
-                            <Link href="#new_demande">
-                                <a onClick={()=>setShow_hide(true)}> <div className="button full">DEMANDE EN LIGNE</div></a>
-                            </Link>
-                            <Link href="/">
-                                <a> <div className="button full">PRENDRE RENDEZ-VOUS AVEC UN CONSEILLER</div></a>
-                            </Link>
+                <ShowOrHideLayout
+                    title = "TERMINER L'INSCRIPTION DE MON ENTREPRISE"
+                    statut = {register_todo}
+                >
+                    <div className="register_todo_container">
+                        <div className="underline register_todo w100 orientationH spaceBetween center">
+                            <div className="orientationH center">
+                                <label>Nom de l'entreprise :</label><input type="text" name="ent_name"/>
+                            </div>
+                            <div className="status">f</div>
                         </div>
+
+                        <div className="register_todo w100 orientationH spaceBetween center">
+                            <div className="orientationH center">
+                                <label>Qualité du signataire :</label><input type="text" name="ent_name"/>
+                            </div>
+                            <div className="status">f</div>
+                        </div>
+                        <div className="register_todo w100 orientationH spaceBetween center">
+                            <div className="orientationH center">
+                                <label>RCS + Ville :</label><input type="text" name="ent_name"/>
+                            </div>
+                            <div className="status">f</div>
+                        </div>
+                        <div className="register_todo w100 orientationH spaceBetween center">
+                            <div className="orientationH center">
+                                <label>Tel :</label><input type="text" name="ent_name"/>
+                            </div>
+                            <div className="status">f</div>
+                        </div>
+                        <div className="register_todo w100 orientationH spaceBetween center">
+                            <div className="orientationH center">
+                                <label>Mail :</label><input type="text" name="ent_name"/>
+                            </div>
+                            <div className="status">f</div>
+                        </div>
+                        <div className="register_todo w100 orientationH spaceBetween center">
+                            <div className="orientationH center">
+                                <label>Siège social :</label><input type="text" name="ent_name"/>
+                            </div>
+                            <div className="status">f</div>
+                        </div>
+                        <div className="register_todo w100 orientationH spaceBetween center">
+                            <div className="orientationH center">
+                                <label>Code postal :</label><input type="text" name="ent_name"/>
+                            </div>
+                            <div className="status">f</div>
+                        </div>
+                        <div className="register_todo w100 orientationH spaceBetween center">
+                            <div className="orientationH center">
+                                <label>Ville :</label><input type="text" name="ent_name"/>
+                            </div>
+                            <div className="status">f</div>
+                        </div>
+                        <div className="register_todo w100 orientationH spaceBetween center">
+                            <div className="orientationH center">
+                                <label>Pays :</label><input type="text" name="ent_name"/>
+                            </div>
+                            <div className="status">f</div>
+                        </div> 
+                        <div className="orientationH spaceBetween fromRight "><div className="button full mbem">VALIDER</div></div>
+                    </div>
+
+                </ShowOrHideLayout>
+                
+
+                {/* ZONE FAIRE MA DEMANDE */}
+                <div className="show_hide_layout orientationH spaceBetween center demandes_link">
+                    <div className="orientationH center"><label className="label">FAIRE MA DEMANDE</label></div>
+                    <div className="orientationH ">
+                        <Link href="#new_demande">
+                            <a onClick={()=>setShow_hide(true)}> <div className="button full">DEMANDE EN LIGNE</div></a>
+                        </Link>
+                        <Link href="">
+                            <a> <div className="button full">PRENDRE RENDEZ-VOUS AVEC UN CONSEILLER</div></a>
+                        </Link>
+                    </div>
+
+                </div>
+
+                {/* DEMANDE EN COURS */}
+                <WrapListLayout
+                    title= "DEMANDES EN COURS ..............."
+                    linkForMore=""
+                >
+                    <div className="demande">
+                        <label>CONSULTANT EN RECRUTEMENT</label>
+                        <div>27/09/2021</div>
+                        <div>RECRUTÉ : ............</div>
+                    </div>
+                </WrapListLayout>
+                
+
+                {/*MES DEMANDE*/}
+                <WrapListLayout
+                    title= "DERNIÈRES DEMANDES "
+                    linkForMore=""
+                >
+                    <div className="demande">
+                        <label>CONSULTANT EN RECRUTEMENT</label>
+                        <div>27/09/2021</div>
+                        <div>RECRUTÉ : Albert ANSHTINE</div>
+                    </div>
+                        
+                    <div className="more orientationV center">
+                        <Link  href="#new_demande">
+                            <a className="center orientationV" onClick={()=>setShow_hide(true)} >
+                                <div className="more_btn center">+</div>
+                                Ajouter un poste
+                            </a>
+                        </Link>
+                    </div>
+                </WrapListLayout>
+                
+                {/* NOUVELLE DEMANDE FORMULAIRE */}
+                <ShowOrHideLayout
+                    title = "NOUVELLE OFFRE D'EMPLOIE"
+                    show_hide = {show_hide}
+                    callback = {()=>setShow_hide(false)}
+                >
+                    <div id="new_demande">
+                        <div className="new_demande underline orientationH spaceBetween w100">
+                            {/* CHAMPS DU FORMULAIRE */}
+                            <div className="form_new_post orientationV">
+                                <br></br>
+                                <div className=" register_todo w100 orientationH spaceBetween center">
+                                    <div className="orientationH center">
+                                        <label>Intitule du poste :</label><input type="text" name="ent_name"/>
+                                    </div>
+                                </div>
+
+                                <div className="register_todo w100 orientationH spaceBetween center">
+                                    <div className="orientationH center">
+                                        <label>Pays :</label>
+                                        <select className="form_select">
+                                            <option>--Pays--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="register_todo w100 orientationH spaceBetween center">
+                                    <div className="orientationH center">
+                                        <label>Departement :</label>
+                                        <select className="form_select">
+                                            <option>--Departement--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="register_todo w100 orientationH spaceBetween center">
+                                    <div className="orientationH center">
+                                        <label>Diplôme requis :</label>
+                                        <select className="form_select">
+                                            <option>--Choix--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="register_todo w100 orientationH spaceBetween center">
+                                    <div className="orientationH center">
+                                        <label>Niveau d'étude requis :</label>
+                                        <select className="form_select">
+                                            <option>--Choix--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="register_todo w100 orientationH spaceBetween center">
+                                    <div className="orientationH center">
+                                        <label>Expérience requise :</label>
+                                        <select className="form_select">
+                                            <option>--Choix--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                            {/* CHAMPS DU FICHIERS */}
+                            <div className="orientationV">
+                                <br></br>
+                                <div className=" files w100 orientationV spaceBetween ">
+                                    <label>Fiche de poste :</label>
+                                    <input type="file"  name="avatar" accept="image/png, image/jpeg"/>
+                                </div>
+
+                                <div className=" files w100 orientationV spaceBetween ">
+                                    <label>Présentation du poste en pdf:</label>
+                                    <input type="file"  name="avatar" accept="image/png, image/jpeg"/>
+                                </div>
+                                
+                                <div className=" files w100 orientationV spaceBetween ">
+                                    <label>Présentation du poste en video :</label>
+                                    <input type="file"  name="avatar" accept="image/png, image/jpeg"/>
+                                </div>
+
+                                <div className=" files w100 orientationV spaceBetween ">
+                                    <label>Présentation de l'entreprise en pdf :</label>
+                                    <input type="file"  name="avatar" accept="image/png, image/jpeg"/>
+                                </div>
+
+                                <div className=" files w100 orientationV spaceBetween ">
+                                    <label>Présentation de l'entreprise en video :</label>
+                                    <input type="file"  name="avatar" accept="image/png, image/jpeg"/>
+                                </div>
+
+                            </div>
+
+                            {/* CALENDRIER */}
+                            <div className="calendrier orientationV">
+                                <br></br>
+                                <div>Merci de choisir un créneau de RDV afin de finaliser votre demande</div>
+
+                                <Agenda/>
+                            </div>
+
+                        </div>
+                        <div className="orientationH spaceBetween fromRight "><div className="button full mbem">VALIDER</div></div>
 
                     </div>
 
-                    {/* DEMANDE EN COURS */}
-                    <WrapListLayout
-                        title= "DEMANDES EN COURS ..............."
-                        linkForMore="/"
-                    >
-                        <div className="demande">
-                            <label>CONSULTANT EN RECRUTEMENT</label>
-                            <div>27/09/2021</div>
-                            <div>RECRUTÉ : ............</div>
-                        </div>
-                    </WrapListLayout>
+                </ShowOrHideLayout>
                    
 
-                    {/*MES DEMANDE*/}
-                    <WrapListLayout
-                        title= "DERNIÈRES DEMANDES "
-                        linkForMore="/"
-                    >
-                        <div className="demande">
-                            <label>CONSULTANT EN RECRUTEMENT</label>
-                            <div>27/09/2021</div>
-                            <div>RECRUTÉ : Albert ANSHTINE</div>
-                        </div>
-                            
-                        <div className="more orientationV center">
-                            <Link  href="#new_demande">
-                                <a className="center orientationV" onClick={()=>setShow_hide(true)} >
-                                    <div className="more_btn center">+</div>
-                                    Ajouter un poste
-                                </a>
-                            </Link>
-                        </div>
-                    </WrapListLayout>
-                   
-                    {/* NOUVELLE DEMANDE FORMULAIRE */}
-                    <ShowOrHideLayout
-                        title = "NOUVELLE OFFRE D'EMPLOIE"
-                        show_hide = {show_hide}
-                        callback = {()=>setShow_hide(false)}
-                    >
-                        <div id="new_demande">
-                            <div className="new_demande underline orientationH spaceBetween w100">
-                                {/* CHAMPS DU FORMULAIRE */}
-                                <div className="form_new_post orientationV">
-                                    <br></br>
-                                    <div className=" register_todo w100 orientationH spaceBetween center">
-                                        <div className="orientationH center">
-                                            <label>Intitule du poste :</label><input type="text" name="ent_name"/>
-                                        </div>
-                                    </div>
-
-                                    <div className="register_todo w100 orientationH spaceBetween center">
-                                        <div className="orientationH center">
-                                            <label>Pays :</label>
-                                            <select className="form_select">
-                                                <option>--Pays--</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="register_todo w100 orientationH spaceBetween center">
-                                        <div className="orientationH center">
-                                            <label>Departement :</label>
-                                            <select className="form_select">
-                                                <option>--Departement--</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="register_todo w100 orientationH spaceBetween center">
-                                        <div className="orientationH center">
-                                            <label>Diplôme requis :</label>
-                                            <select className="form_select">
-                                                <option>--Choix--</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="register_todo w100 orientationH spaceBetween center">
-                                        <div className="orientationH center">
-                                            <label>Niveau d'étude requis :</label>
-                                            <select className="form_select">
-                                                <option>--Choix--</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="register_todo w100 orientationH spaceBetween center">
-                                        <div className="orientationH center">
-                                            <label>Expérience requise :</label>
-                                            <select className="form_select">
-                                                <option>--Choix--</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                
-                                </div>
-                               {/* CHAMPS DU FICHIERS */}
-                               <div className="orientationV">
-                                    <br></br>
-                                    <div className=" files w100 orientationV spaceBetween ">
-                                        <label>Fiche de poste :</label>
-                                        <input type="file"  name="avatar" accept="image/png, image/jpeg"/>
-                                    </div>
-
-                                    <div className=" files w100 orientationV spaceBetween ">
-                                        <label>Présentation du poste en pdf:</label>
-                                        <input type="file"  name="avatar" accept="image/png, image/jpeg"/>
-                                    </div>
-                                    
-                                    <div className=" files w100 orientationV spaceBetween ">
-                                        <label>Présentation du poste en video :</label>
-                                        <input type="file"  name="avatar" accept="image/png, image/jpeg"/>
-                                    </div>
-
-                                    <div className=" files w100 orientationV spaceBetween ">
-                                        <label>Présentation de l'entreprise en pdf :</label>
-                                        <input type="file"  name="avatar" accept="image/png, image/jpeg"/>
-                                    </div>
-
-                                    <div className=" files w100 orientationV spaceBetween ">
-                                        <label>Présentation de l'entreprise en video :</label>
-                                        <input type="file"  name="avatar" accept="image/png, image/jpeg"/>
-                                    </div>
-
-                                </div>
-
-                                {/* CALENDRIER */}
-                                <div className="calendrier orientationV">
-                                    <br></br>
-                                    <div>Merci de choisir un créneau de RDV afin de finaliser votre demande</div>
-
-                                    <Agenda/>
-                                </div>
-
-                            </div>
-                            <div className="orientationH spaceBetween fromRight "><div className="button full mbem">VALIDER</div></div>
-
-                        </div>
-
-                    </ShowOrHideLayout>
-                   
-
-                </body>
                 
             </main>
 

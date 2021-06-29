@@ -129,12 +129,11 @@ User.test = (result)=>{
   });
 }
 
-User.inscription = (newUser,result)=>{ 
+User.signup = (newUser,result)=>{ 
 
   psql.query('INSERT INTO users  (user_name,user_firstname,user_email,user_password,user_right) VALUES ($1,$2,$3,$4,$5) RETURNING user_id;',
   [newUser.user_name,newUser.user_firstname,newUser.user_email,newUser.user_password,newUser.user_right], 
   (err, res) => {
-    //console.log("error : --"+err + "--")
     if (err) {
       result(err, null);
       return;
@@ -142,6 +141,19 @@ User.inscription = (newUser,result)=>{
     result(null,res);
   });
 }
+
+User.login = (lodedUser, result) => {
+  
+  psql.query("SELECT * FROM users WHERE user_email= $1",
+  [lodedUser.user_email],
+  (err, res) => {
+    if (err) {
+      result(err, null);
+      return;
+    }
+    result(null,res.rows[0]);
+  });
+};
 
 module.exports = User;
 

@@ -40,8 +40,13 @@ export default function inscription() {
                 user_password:user_password1,
                 user_right:user_right
 
-            }).then((reponse)=>{
-                console.log(reponse)
+            }).then((resutlt)=>{
+                
+                if(!resutlt.data.err){
+                    window.location.href = `../interface/recruteur/${reponse.user_id}`
+                }else {
+                     setAlert("Deja inscrit")
+                }
             });
         }
 
@@ -73,7 +78,7 @@ export default function inscription() {
                                 <div className="formbg">
                                     <div className="formbg-inner padding-horizontal--48">
                                         <h3 className="padding-bottom--15 color-p">Inscription</h3>
-                                        <div className="alert">{alert && alert}</div>
+                                        <div className="alert" className="alert">{alert && alert}</div>
                                         <form id="stripe-login">
                                         <div className="row">
                                                 <div className="mb-3 col">

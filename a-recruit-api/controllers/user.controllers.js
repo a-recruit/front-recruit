@@ -2,9 +2,14 @@ const User = require("../models/user.models.js");
 const bcrypt = require('bcrypt');
 const Jwt = require('jsonwebtoken');
 
+const dotenv = require("dotenv");
+dotenv.config({path: './.env'}); 
+const TOKEN = process.env.TOKEN;
+
+
 exports.test = (req,res)=>{
 
-  User.test((err, data) => {
+  User.test((err, data) => {require('do')
 
     if (err){
       res.status(500).json({
@@ -18,7 +23,7 @@ exports.test = (req,res)=>{
 
 }
 
-exports.inscription = (req,res)=>{
+exports.signup = (req,res)=>{
 
   bcrypt.hash(req.body.user_password,12,function(err,hash){
 
@@ -30,14 +35,11 @@ exports.inscription = (req,res)=>{
       user_right:req.body.user_right
     });
 
-    User.inscription(newUser,(err, data) => {
+    User.signup(newUser,(err, data) => {
 
       if (err){
 
-        res.status(500).json({
-          message:
-            err.message || "Une erreur pendant l'ajout à la base de donnée"
-        });
+        res.json({err:401});
 
       }else res.json(data.rows);
 
@@ -45,6 +47,48 @@ exports.inscription = (req,res)=>{
 
   }); 
 }
+
+exports.login = (req, res) => {
+
+  // Create a User
+  const user = new User({
+    user_email: req.body.user_email,
+    user_password: req.body.user_password
+  });
+
+  User.login(user,(err, data) => {
+
+    //console.log(data.user_password)
+    if (err)
+      res.json({err:400});
+    else{
+
+      data? bcrypt.compare(user.user_password,data.user_password,function(err,result){
+        if(!err && result){
+
+          const claims = {user_id : data.user_id, user_name:data.user_name};
+          const jwt =  Jwt.sign(claims,TOKEN,{expiresIn: '1h'});
+
+          /*res.setHeader('Set-Cookie',cookie.serialize('auth',jwt,{
+            httpOnly:true,
+            secure:process.env.NODE_ENV !== 'development',
+            sameSite: 'strict',
+            maxAge: 3600,
+            path: "/"
+          }))*/
+
+          res.json({aumessage:jwt});
+          //console.log(jwt)
+          
+        }else{
+          res.json({err:401});
+        }
+      }):res.json({err:402});
+    }
+  });
+};
+
+
 
 exports.createDb = (req,res)=>{
 
