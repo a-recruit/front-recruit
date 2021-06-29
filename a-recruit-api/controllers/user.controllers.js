@@ -17,16 +17,20 @@ exports.test = (req,res)=>{
 
 }
 
-exports.addData = (req,res)=>{
+exports.inscription = (req,res)=>{
 
   const newUser = new User({
-    id: req.body.id,
-    name:req.body.name,
-    firstname: req.body.firstname,
-    mail: req.body.mail,
+    user_name:req.body.user_name,
+    user_firstname: req.body.user_firstname,
+    user_email: req.body.user_email,
+    user_password: req.body.user_password,
+    user_right:req.body.user_right
+
   });
 
-  User.addData(newUser,(err, data) => {
+  
+
+  User.inscription(newUser,(err, data) => {
 
     if (err){
 
@@ -43,6 +47,7 @@ exports.addData = (req,res)=>{
 }
 
 exports.createDb = (req,res)=>{
+  
   User.createDb((err, data) => {
 
     if (err){

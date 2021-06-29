@@ -2,10 +2,12 @@ const psql = require("../configs/db.js");
 
 // constructor
 const User = function(user) {
-  this.id = user.id;
-  this.name = user.name;
-  this.firstname = user.firstname;
-  this.mail = user.mail;
+  this.user_id = user.user_id;
+  this.user_name = user.user_name;
+  this.user_firstname = user.user_firstname;
+  this.user_email = user.user_email;
+  this.user_right= user.user_right;
+  this.user_password = user.user_password;
 };
 
 User.createDb = (result)=>{
@@ -40,7 +42,7 @@ User.createDb = (result)=>{
 
 
     "CREATE TABLE IF NOT EXISTS company ("+
-    
+
         "company_id                  serial primary key,"+
         "company_nationality         varchar(150) ,"+
         "company_phone_number        varchar(150)  ,"+
@@ -127,10 +129,11 @@ User.test = (result)=>{
   });
 }
 
-User.addData = (newUser,result)=>{ 
+User.inscription = (newUser,result)=>{ 
 
-  psql.query('INSERT INTO yohann  (id,name,firstname,mail) VALUES ($1,$2,$3,$4) RETURNING id;',
-  [newUser.id,newUser.name,newUser.firstname,newUser.mail], 
+
+  psql.query('INSERT INTO users  (user_name,user_firstname,user_email,user_password,user_right) VALUES ($1,$2,$3,$4,$5) RETURNING user_id;',
+  [newUser.user_name,newUser.user_firstname,newUser.user_email,newUser.user_password,newUser.user_right], 
   (err, res) => {
     
     if (err) {

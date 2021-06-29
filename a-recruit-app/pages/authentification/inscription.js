@@ -1,17 +1,55 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import Head from 'next/head';
 import Link from 'next/link';
 import Header from '../../components/header/back_to_home_header'
+import Axios from 'axios'
 
 
 
 
-export default function SignIn() {
+export default function inscription() {
     
-    const [user_name,setUserName]=useState("");
-    const [user_firstname,setUserFirstName]=useState("");
-    const [user_email,setUserEmail]=useState("");
-    const [user_password,setUserpassword]=useState("");
+    
+    const [user_name,setUserName]=useState(false);
+    const [user_firstname,setUserFirstName]=useState(false);
+    const [user_email,setUserEmail]=useState(false);
+    const [user_password1,setUserpassword1]=useState(false);
+    const [user_password2,setUserpassword2]=useState(false);
+    const [user_right,serUserRight]=useState("false")
+    const [alert,setAlert]=useState(false);
+
+
+   
+
+    const inscription = (e)=>{
+        e.preventDefault()
+        if(user_password1 !== user_password2){
+
+            setAlert("Le mot de pass n'est pas identique")
+            
+        }else if(!user_name || !user_firstname || !user_email || !user_password1 || !user_password2){
+
+            setAlert(" Veuillez remplir tous les champs pour vous inscrire")
+        }else{
+
+           Axios.post('http://localhost:3080/inscription',{
+                
+                user_name:user_name,
+                user_firstname:user_firstname,
+                user_email:user_email,
+                user_password:user_password1,
+                user_right:user_right
+
+            }).then((reponse)=>{
+                console.log(reponse)
+            });
+        }
+
+       
+
+        
+    }
+
    
     
     return (
@@ -35,23 +73,24 @@ export default function SignIn() {
                                 <div className="formbg">
                                     <div className="formbg-inner padding-horizontal--48">
                                         <h3 className="padding-bottom--15 color-p">Inscription</h3>
+                                        <div className="alert">{alert && alert}</div>
                                         <form id="stripe-login">
                                         <div className="row">
                                                 <div className="mb-3 col">
                                                     <label  className="form-label color-p">Nom</label>
-                                                    <input id="inputName" type="text" className="form-control inputs" name="nom" placeholder="Nom" pattern="[a-zâäàéèùêëîïôöçñA-Z-\s]" required onChange={(e)=>{setUserName(e.target.value)}}/>
+                                                    <input id="inputName" type="text" className="form-control inputs" name="nom" placeholder="Nom"  required onChange={(e)=>{setUserName(e.target.value)}}/>
                                                     <div id="dangerAlert"className="form-text"></div>
                                                 </div>
                                                 <div className="mb-3 col">
                                                     <label  className="form-label color-p">Prénom</label>
-                                                    <input type="text" className="form-control inputs" name="nom" placeholder="Prénom" pattern="[a-zâäàéèùêëîïôöçñA-Z-0-9\s]" required/>
+                                                    <input type="text" className="form-control inputs" name="nom" placeholder="Prénom"  required onChange={(e)=>{setUserFirstName(e.target.value)}}/>
                                                     <div className="form-text"></div>
                                                 </div>
                                             </div>
                                             <div className="row">
                                                 <div className="mb-3 col">
                                                     <label  className="form-label color-p">e-mail</label>
-                                                    <input type="email" className="form-control inputs" name="email" placeholder="e-mail" pattern="[a-zâäàéèùêëîïôöçñA-Z0-9.-_]+[@]{1}[a-zA_Z0-9.-_]+[.]{1}[a-z]{2,4}" required/>
+                                                    <input type="email" className="form-control inputs" name="email" placeholder="e-mail"  required onChange={(e)=>{setUserEmail(e.target.value)}}/>
                                                     <div className="form-text"></div>
                                                 </div>
                                              </div>
@@ -59,19 +98,19 @@ export default function SignIn() {
                                                 <div className="col mb-3">
                                                     <label className="col-form-label color-p">Mot de passe</label>
                                                     <div className="col">
-                                                        <input type="password" name="password" className="form-control" placeholder="Mot de passe" pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})"/>
+                                                        <input type="password" name="password" className="form-control" placeholder="Mot de passe"  onChange={(e)=>{setUserpassword1(e.target.value)}}/>
                                                     </div>
                                                 </div>
                                                 <div className="col mb-3">
                                                     <label className="col-form-label color-p">Confirmation</label>
                                                     <div className="col">
-                                                        <input type="password" name="passwordConfirm" className="form-control" placeholder="Confirmez mot de passe" pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})"/>
+                                                        <input type="password" name="passwordConfirm" className="form-control" placeholder="Confirmez mot de passe"  onChange={(e)=>{setUserpassword2(e.target.value)}}/>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div className="center">
-                                                <button  type="submit" className="btn btn-primary mt-4 mb-4 ">Inscription</button>
+                                                <button  type="submit" className="btn btn-primary mt-4 mb-4 " onClick={(e)=>{inscription(e)}}>Inscription</button>
                                             </div>
                                         </form>
                                     </div>

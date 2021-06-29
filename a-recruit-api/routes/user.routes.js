@@ -4,7 +4,7 @@ module.exports = app => {
 
     app.get("/test",user.test);
 
-    app.post("/ajout",user.addData);
+    app.post("/inscription",user.inscription);
 
     app.post("/DB_CREATE",user.createDb);
 
