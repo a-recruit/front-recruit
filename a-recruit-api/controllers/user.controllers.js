@@ -1,11 +1,12 @@
 const User = require("../models/user.models.js");
+const bcrypt = require('bcrypt');
+const Jwt = require('jsonwebtoken');
 
 exports.test = (req,res)=>{
 
   User.test((err, data) => {
 
     if (err){
-
       res.status(500).json({
         message:
           err.message || "Une erreur pendant le test de la base de donnée."
@@ -19,35 +20,34 @@ exports.test = (req,res)=>{
 
 exports.inscription = (req,res)=>{
 
-  const newUser = new User({
-    user_name:req.body.user_name,
-    user_firstname: req.body.user_firstname,
-    user_email: req.body.user_email,
-    user_password: req.body.user_password,
-    user_right:req.body.user_right
+  bcrypt.hash(req.body.user_password,12,function(err,hash){
 
-  });
+    const newUser = new User({
+      user_name:req.body.user_name,
+      user_firstname: req.body.user_firstname,
+      user_email: req.body.user_email,
+      user_password: hash,
+      user_right:req.body.user_right
+    });
 
-  
+    User.inscription(newUser,(err, data) => {
 
-  User.inscription(newUser,(err, data) => {
+      if (err){
 
-    if (err){
+        res.status(500).json({
+          message:
+            err.message || "Une erreur pendant l'ajout à la base de donnée"
+        });
 
-      res.status(500).json({
-        message:
-          err.message || "Une erreur pendant l'ajout à la base de donnée"
-      });
+      }else res.json(data.rows);
 
-    }else res.json(data.rows);
+    });
 
-  });
-
-  
+  }); 
 }
 
 exports.createDb = (req,res)=>{
-  
+
   User.createDb((err, data) => {
 
     if (err){
