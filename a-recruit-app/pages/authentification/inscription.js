@@ -2,19 +2,21 @@ import {useState,useEffect} from 'react'
 import Head from 'next/head';
 import Link from 'next/link';
 import Axios from 'axios'
+import {useRouter} from 'next/router'
 
 
 
 
 export default function inscription() {
     
-    
+    const router=useRouter();//donne la personne qui veut s'inscrire 
+
     const [user_name,setUserName]=useState(false);
     const [user_firstname,setUserFirstName]=useState(false);
     const [user_email,setUserEmail]=useState(false);
     const [user_password1,setUserpassword1]=useState(false);
     const [user_password2,setUserpassword2]=useState(false);
-    const [user_right,serUserRight]=useState("false");
+    const [user_right,serUserRight]=useState(router.query.dest);
     const [alert,setAlert]=useState(false);
 
 
@@ -42,7 +44,17 @@ export default function inscription() {
             }).then((resutlt)=>{
                 
                 if(!resutlt.data.err){
-                    window.location.href = `../interface/recruteur/${reponse.user_id}`
+
+                    if(router.query.dest==="RECRUTEUR"){
+
+                        Axios.post('http://localhost:3080/inscription',{//creer une centreprise à son nom
+                
+                        }).then((resutlt2)=>{
+                            
+                            
+                        });
+                    }
+                    window.location.href = `../interface/recruteur/${result.user_id}`
                 }else {
                      setAlert("Deja inscrit")
                 }

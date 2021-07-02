@@ -33,6 +33,38 @@ exports.getUnFillededJob = (req,res)=>{
   
 }
 
+exports.getFillededJobLimit4 = (req,res)=>{
+
+    const user_id = req.body.user_id
+
+    Jobs.getFillededJobLimit4(user_id,(err, data) => {
+  
+        if (err){
+  
+          res.json(err || {err:401});
+  
+        }else res.json(data.rows);
+  
+    });
+  
+}
+
+exports.getUnFillededJobLimit4 = (req,res)=>{
+
+    const user_id = req.body.user_id
+
+    Jobs.getUnFillededJobLimit4(user_id,(err, data) => {
+  
+        if (err){
+  
+          res.json(err || {err:401});
+  
+        }else res.json(data.rows);
+  
+    });
+  
+}
+
 exports.createjob = (req, res) => {
 
     const newJob = new Jobs ({

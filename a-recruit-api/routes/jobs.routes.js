@@ -2,9 +2,13 @@ module.exports = app => {
 
     const job = require("../controllers/jobs.controllers.js");
 
-    app.get("/getUnFillededJob",job.getUnFillededJob);
+    app.post("/getUnFillededJob",job.getUnFillededJob);
 
-    app.get("/getFillededJob",job.getFillededJob);
+    app.post("/getFillededJob",job.getFillededJob);
+
+    app.post("/getUnFillededJobLimit4",job.getUnFillededJobLimit4);
+
+    app.post("/getFillededJobLimit4",job.getFillededJobLimit4);
 
     app.post("/createJob",  job.createjob);
 

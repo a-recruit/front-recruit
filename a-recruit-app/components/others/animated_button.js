@@ -4,7 +4,7 @@ import Link from 'next/link'
 export default function animated_button(props) {
     return (
         <div>
-            <Link href={""+props.link}>
+            <Link href={{pathname:""+props.link,query:{dest:props.data}}}>
                 <a>
                     <button>
                     {props.text}

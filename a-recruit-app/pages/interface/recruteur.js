@@ -1,4 +1,4 @@
-import React ,{useState,useEffect}from 'react'
+import React ,{useState,useEffect,Component}from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import Header from '../../components/header/header'
@@ -11,6 +11,8 @@ import Axios from 'axios'
 export default function recruteur({data}) {
 
     console.log(data)
+
+
 
     //Variables des formulaires
 
@@ -167,66 +169,69 @@ export default function recruteur({data}) {
                     <div className="register_todo_container">
                         <div className="underline register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>Nom de l'entreprise :</label><input placeholder={"..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyName(e.target.value)}}/>
+                                <label>Nom de l'entreprise :</label>
+                                <input placeholder={data.company_info.company_name ? data.company_info.company_name : "..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyName(e.target.value)}}/>
                             </div>
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>Nationalité de l'entreprise :</label><input placeholder={"..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyNationality(e.target.value)}}/>
-                            </div>
-                            
-                        </div>
-                        <div className="register_todo w100 orientationH spaceBetween center">
-                             <div className="w100 orientationH spaceBetween center">
-                                <label>Qualité du signataire :</label><input placeholder={"..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyRepresentativeStatus(e.target.value)}}/>
+                                <label>Nationalité de l'entreprise :</label>
+                                <input placeholder={data.company_info.company_nationality? data.company_info.company_nationality: "..."}type="text" name="ent_name" required onChange={(e)=>{setCompanyNationality(e.target.value)}}/>
                             </div>
                             
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>RCS + Ville :</label><input placeholder={"..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyRcs(e.target.value)}}/>
+                                <label>Qualité du signataire :</label>
+                                <input placeholder={data.company_info.company_representative_status ? data.company_info.company_representative_status : "..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyRepresentativeStatus(e.target.value)}}/>
                             </div>
                             
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>Tel :</label><input placeholder={"..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyPhoneNumber(e.target.value)}}/>
+                                <label>RCS + Ville :</label><input placeholder={data.company_info.company_rcs ? data.company_info.company_rcs : "..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyRcs(e.target.value)}}/>
                             </div>
                             
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>Siège social :</label><input placeholder={"..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyHeadquarters(e.target.value)}}/>
+                                <label>Tel :</label><input placeholder={data.company_info.company_phone_number ? data.company_info.company_phone_number : "..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyPhoneNumber(e.target.value)}}/>
                             </div>
                             
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>Département :</label><input placeholder={"..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyDepartment(e.target.value)}}/>
+                                <label>Siège social :</label><input placeholder={data.company_info.company_headquarters ? data.company_info.company_headquarters : "..."}type="text" name="ent_name" required onChange={(e)=>{setCompanyHeadquarters(e.target.value)}}/>
                             </div>
                             
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>Code postal :</label><input placeholder={"..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyZipCode(e.target.value)}}/>
+                                <label>Département :</label><input placeholder={data.company_info.company_department? data.company_info.company_department : "..."}type="text" name="ent_name" required onChange={(e)=>{setCompanyDepartment(e.target.value)}}/>
                             </div>
                             
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>Ville :</label><input placeholder={"..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyCity(e.target.value)}}/>
+                                <label>Code postal :</label><input placeholder={data.company_info.company_zip_code ? data.company_info.company_zip_code : "..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyZipCode(e.target.value)}}/>
                             </div>
                             
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>Adresse :</label><input placeholder={"..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyAddress(e.target.value)}}/>
+                                <label>Ville :</label><input placeholder={data.company_info.company_city ? data.company_info.company_city : "..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyCity(e.target.value)}}/>
                             </div>
                             
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>Pays :</label><input placeholder={"..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyCountry(e.target.value)}}/>
+                                <label>Adresse :</label><input placeholder={data.company_info.company_address ? data.company_info.company_address : "..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyAddress(e.target.value)}}/>
+                            </div>
+                            
+                        </div>
+                        <div className="register_todo w100 orientationH spaceBetween center">
+                             <div className="w100 orientationH spaceBetween center">
+                                <label>Pays :</label><input placeholder={data.company_info.company_country ? data.company_info.company_country: "..."} type="text" name="ent_name" required onChange={(e)=>{setCompanyCountry(e.target.value)}}/>
                             </div>
                             
                         </div> 
@@ -259,11 +264,17 @@ export default function recruteur({data}) {
                     title= "DEMANDES EN COURS ..............."
                     linkForMore=""
                 >
-                    <div className="demande">
-                        <label>CONSULTANT EN RECRUTEMENT</label>
-                        <div>27/09/2021</div>
-                        <div>RECRUTÉ : ............</div>
-                    </div>
+                    {data.company_unFilledJobs.length!==0 ? data.company_unFilledJobs.map((item, index) => {
+                        return (
+                            <div className="demande" key={index}>
+                                <label>CONSULTANT EN RECRUTEMENT</label>
+                                <div>27/09/2021</div>
+                                <div>RECRUTÉ : Albert ANSHTINE</div>
+                            </div>
+                        );
+                    })
+                    : null}
+                   
                 </WrapListLayout>
                 
 
@@ -272,11 +283,16 @@ export default function recruteur({data}) {
                     title= "DERNIÈRES DEMANDES "
                     linkForMore=""
                 >
-                    <div className="demande">
-                        <label>CONSULTANT EN RECRUTEMENT</label>
-                        <div>27/09/2021</div>
-                        <div>RECRUTÉ : Albert ANSHTINE</div>
-                    </div>
+                   {data.company_fillededJobs.length!==0 ? data.company_fillededJobs.map((item, index) => {
+                        return (
+                            <div className="demande" key={index}>
+                                <label>CONSULTANT EN RECRUTEMENT</label>
+                                <div>27/09/2021</div>
+                                <div>RECRUTÉ : Albert ANSHTINE</div>
+                            </div>
+                        );
+                    })
+                    : <div></div>}
                         
                     <div className="more orientationV center">
                         <Link  href="#new_demande">
@@ -407,17 +423,30 @@ export default function recruteur({data}) {
 
 export async function getStaticProps() {
 
-    const user_id=25;
-    const info = await fetch("http://localhost:3080/getCompanyInfo",{user_id:user_id})
-    const company_info = await info.json()
+    const user_id=25
+    var info = []
+
+    await Axios.post("http://localhost:3080/getCompanyInfo",{user_id:user_id }).
+    then(async (reponse)=>{info= await reponse.data})
+    const company_info = await info
+    
 
     if(company_info.company_id){
 
-        const fillededJobs = await fetch("http://localhost:3080/getCompanyInfo",[company_info.company_id])
-        const unFilledJobs = await fetch("http://localhost:3080/getCompanyInfo",[company_info.company_id])
+        console.log(company_info.company_id)
+        var fillededJobs = []
+        var unFilledJobs = []
 
-        const company_fillededJobs = await fillededJobs.json()
-        const company_unFilledJobs = await unFilledJobs.json()
+        await Axios.post("http://localhost:3080/getUnFillededJobLimit4",{user_id:user_id}).
+        then(async (reponse)=>{unFilledJobs= await reponse.data})
+        await Axios.post("http://localhost:3080/getFillededJobLimit4",{user_id:user_id}).
+        then(async (reponse)=>{fillededJobs= await reponse.data})
+
+        //console.log(fillededJobs)
+        
+
+        const company_fillededJobs = await fillededJobs
+        const company_unFilledJobs = await unFilledJobs
 
         return {
             props: {

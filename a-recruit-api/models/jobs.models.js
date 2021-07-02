@@ -49,6 +49,35 @@ Jobs.getUnFillededJob = (user_id, result) => {
 };
 
 
+Jobs.getFillededJobLimit4 = (user_id, result) => {
+  
+  psql.query("SELECT * FROM jobs WHERE job_creator_id = $1 AND job_statut = $2 ORDER BY created_at LIMIT 4",
+  [user_id,1],
+  (err, res) => {
+    if (err) {
+      result(err, null);
+      return;
+    }
+    result(null,res);
+  });
+
+};
+
+Jobs.getUnFillededJobLimit4 = (user_id, result) => {
+
+psql.query("SELECT * FROM jobs WHERE job_creator_id = $1 AND job_statut = $2 ORDER BY created_at LIMIT 4",
+[user_id,0],
+(err, res) => {
+  if (err) {
+    result(err, null);
+    return;
+  }
+  result(null,res);
+});
+
+};
+
+
 Jobs.createjob = (newJob, result) => {
 
   psql.query('INSERT INTO jobs (job_title,job_contract_type,job_presentation_pdf,job_presentation_video,job_country,job_department,job_city,job_zip_code,job_required_level,job_required_grad, job_required_experience, job_creator_id, job_origin) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING job_id;',

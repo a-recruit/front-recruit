@@ -4,6 +4,7 @@ import AnimatedCustomButton from '../components/others/animated_button'
 import Footer from '../components/footer/footer'
 import Header from '../components/header/home_header'
 
+
 export default function Home() {
   return (
     <>
@@ -29,10 +30,12 @@ export default function Home() {
               <AnimatedCustomButton
                 text="JE CHERCHE UN TALENT"
                 link="/authentification/connexion"
+                data="RECRUTEUR"
               />
               <AnimatedCustomButton
                 text="JE CHERCHE UN EMPLOIE"
                 link="/interface/candidat"
+                data="CANDIDAT"
               />
             </div> 
 
