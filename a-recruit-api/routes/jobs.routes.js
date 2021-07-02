@@ -6,7 +6,7 @@ module.exports = app => {
 
     app.get("/getFillededJob",job.getFillededJob);
 
-    app.post("/createjob",  job.createjob);
+    app.post("/createJob",  job.createjob);
 
   
 };

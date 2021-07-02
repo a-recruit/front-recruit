@@ -4,23 +4,29 @@ import React ,{useState,useEffect} from 'react'
 export default function show_hide_layout(props) {
     
     const [show_todo, set_show_todo] = useState(false);
+   // console.log(  show_todo+" and "+props.show_hide )
+
+
 
     useEffect(()=>{
 
         if(props.show_hide === true){
             set_show_todo(true)
+        }else{
+            set_show_todo(false)
         }
+
     
     },[props.show_hide])
 
     const show_or_hide = () => {
 
         set_show_todo(!show_todo)
+
         if(props.show_hide && props.callback){
-            props.callback()
+            props.callback(!show_todo)
         }
 
-        console.log(  show_todo+" and "+props.show_hide )
     }
 
 
@@ -34,23 +40,20 @@ export default function show_hide_layout(props) {
                 <div className="head w100 orientationH spaceBetween center" onClick={()=>show_or_hide()}>
                     <div className="demandes_head text center">{props.title}</div>
                         <div className="direction_arrow_z orientationH fromRight center">
-                            {props.statut && <div className={"button unfinished" + (!show_todo? " " : " bottom5")}>{props.statut}</div>}
-                            <div><p><i className={"direction_arrow" + (!show_todo? " down" : " up")}></i></p></div>                          
-                        </div>
+                            {props.statut && <div className={"button "+(props.statut ==="A TERMINER" ? " unfinished " : " finished ") + (!show_todo? " " : " bottom5")}>{props.statut}</div>}
+                            <div><p><i className={"direction_arrow" + (!show_todo? " down" : " up")}></i></p>
+                        </div>                          
                     </div>
-
-                    {/* FORMULAIRE D'INSCRIPTION À COMPLETER */}
-
-                    {show_todo? (
-                        
-                        <div className="w100">{props.children}</div>
-
-                    ): (props.callback && props.show_hide ) ?( 
-
-                       <div className="w100">{props.children}</div> 
-
-                    ):null}
                 </div>
+
+                {/* FORMULAIRE D'INSCRIPTION À COMPLETER */}
+
+                {(show_todo ||  props.show_hide)  && (
+                    
+                    <div className="w100">{props.children}</div>
+
+                )}
+            </div>
         </div>
     )
 }

@@ -36,3 +36,19 @@ exports.createCompany = (req,res)=>{
 
   });
 }
+
+
+exports.getCompanyInfo = (req,res)=>{
+
+  const user_id= req.body.user_id;
+
+  Company.getCompanyInfo(user_id,(err, data) => {
+
+    if (err){
+
+      res.json(err || {err:401});
+
+    }else res.json(data.rows);
+
+  });
+}

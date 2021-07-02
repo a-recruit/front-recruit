@@ -50,4 +50,15 @@ Company.createCompany = (newCompany,result)=>{
   });
 }
 
+Company.getCompanyInfo = (user_id,result)=>{
+  psql.query('SELECT * FROM company WHERE company_representative_id = $1',[user_id],
+  (err, res) => {
+    if (err) {
+      result(err, null);
+      return;
+    }
+    result(null,res);
+  });
+}
+
 module.exports = Company;

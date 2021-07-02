@@ -21,6 +21,7 @@
 
 .head{
     min-height: 40px;
+    cursor: pointer;
 }
 
 .bottom5{
@@ -36,7 +37,7 @@
 .register_todo label{
     text-align: left;
     align-items: center;
-    width: 10em;
+    height: 25px;
 }
 
 .register_todo input,.form_select{
@@ -69,6 +70,7 @@
     font-size: var(--font-XS);
     font-weight: 900;
     color: var(--color-primary-light);
+
 }
 
 .demande{
@@ -133,7 +135,7 @@
         width: 100%;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        height: max-content;
     }
 
     .register_todo_container .register_todo{

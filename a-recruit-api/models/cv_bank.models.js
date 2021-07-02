@@ -39,4 +39,16 @@ CvBank.insertCv = (newCV, result) => {
   });
 }
 
+CvBank.getallcvs = (result) => {
+
+  psql.query('SELECT * FROM public.cv_bank ', (err, res) => {
+    
+        if (err) {
+          result(err, null);
+          return;
+        }
+        result(null,res);
+      });
+}
+
 module.exports = CvBank ;

@@ -27,8 +27,8 @@ export default function Connect() {
 
                 if(!resutlt.data.err){
                     //resutlt.redirect("/")
-                    console.log(resutlt.data)
-                    // window.location.href = "../interface/recruteur"
+                    //console.log(resutlt.data)
+                     window.location.href = "../interface/recruteur"
                 }else {
                     setAlert("Identifiants et / ou  mot de passe incorrects")
                 }

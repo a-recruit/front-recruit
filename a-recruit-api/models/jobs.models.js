@@ -17,6 +17,7 @@ const Jobs = function (job) {
   this.job_required_experience = job.job_required_experience;
   this.job_creator_id = job.job_creator_id;
   this.job_origin = job.job_origin;
+  this.job_hire = job.job_hire;
 };
 
 Jobs.getFillededJob = (user_id, result) => {
