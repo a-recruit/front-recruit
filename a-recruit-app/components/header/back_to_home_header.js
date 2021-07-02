@@ -15,9 +15,12 @@ export default function default_user_header() {
             </div>
             <style jsx>{`
                 .d_u_header{
+                    position : absolute;
+                    background-color: transparent;
                     width: 100%;
                     padding: 1em;
                     cursor:pointer;
+                    max-height: 40px;
                 }
                 
                 .d_u_header a{
@@ -25,7 +28,6 @@ export default function default_user_header() {
                 }
                 .redirection{
                    // background-color: #000;
-                    height: 40px;
                     background-position: left;
                     background-image: url("/images/home_icon.png");
                     background-repeat: no-repeat;

@@ -14,6 +14,11 @@
     "static/development/_ssgManifest.js"
   ],
   "pages": {
+    "/": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/index.js"
+    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -24,15 +29,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/authentification/connexion": [
+    "/interface/recruteur": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/authentification/connexion.js"
-    ],
-    "/authentification/inscription": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/authentification/inscription.js"
+      "static/chunks/pages/interface/recruteur.js"
     ]
   },
   "ampFirstPages": []

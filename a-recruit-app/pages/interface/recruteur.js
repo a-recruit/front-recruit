@@ -6,14 +6,69 @@ import Footer from '../../components/footer/footer'
 import ShowOrHideLayout from '../../components/layouts/show_hide_layout'
 import WrapListLayout from '../../components/layouts/wrap_list_layout'
 import Agenda from '../../components/others/agenda'
+import Axios from 'axios'
 
+export default function recruteur() {
 
-export default function recruteure() {
+    const [company_name,setCompanyName]=useState(false);
+    const [company_nationality, setCompanyNationality]=useState(false);
+    const [company_representative_status, setCompanyRepresentativeStatus]=useState(false);
+    const [company_rcs, setCompanyRcs]=useState(false);
+    const [company_headquarters, setCompanyHeadquarters]=useState(false);
+    const [company_zip_code, setCompanyZipCode]=useState(false);
+    const [company_address, setCompanyAddress]=useState(false);
+    const [company_department, setCompanyDepartment]=useState(false);
+    const [company_phone_number, setCompanyPhoneNumber]=useState(false);
+    const [company_city, setCompanyCity]=useState(false);
+    const [company_country, setCompanyCountry]=useState(false);
+    const [is_partner, setIsPartner]=useState(0);
+    const [partner_type, setPartnerType]=useState('no');
+    const [consultant_id, setConsultantId]=useState(5);
+    const [company_representative_id, setCompanyRepresentative]=useState(25);
 
     const register_todo = "A TERMINER";
     
     //Ancre 
     const [show_hide, setShow_hide] =useState(false);
+    
+    const finalization = (e)=>{
+        e.preventDefault()
+        if(!company_name || !company_nationality || !company_phone_number || !company_headquarters || !company_address || !company_department || !company_city
+            || !company_rcs || !company_zip_code || !company_country || !company_representative_status){
+
+            setAlert(" Veuillez remplir tous les champs pour vous inscrire")
+
+        }else{
+
+           Axios.post('http://localhost:3080/createCompany',{
+                
+                company_name:company_name,
+                company_nationality:company_nationality,
+                company_representative_status:company_representative_status,
+                company_rcs:company_rcs,
+                company_address:company_address,
+                company_department:company_department,
+                company_phone_number:company_phone_number,
+                company_headquarters:company_headquarters,
+                company_zip_code:company_zip_code,
+                company_city:company_city,
+                company_country:company_country,
+                company_representative_id:company_representative_id,
+                is_partner:is_partner,
+                partner_type:partner_type,
+                consultant_id:consultant_id
+
+            }).then((resutlt)=>{
+                
+                if(!resutlt.data.err){
+                    window.location.href = `../interface/recruteur`
+                }else {
+                     setAlert("Deja inscrit")
+                }
+            });
+            console.log(finalization);
+        }
+    }
 
     return (
         <div className="interface-layout">
@@ -36,62 +91,72 @@ export default function recruteure() {
                     <div className="register_todo_container">
                         <div className="underline register_todo w100 orientationH spaceBetween center">
                             <div className="orientationH center">
-                                <label>Nom de l'entreprise :</label><input type="text" name="ent_name"/>
-                            </div>
-                            <div className="status">f</div>
-                        </div>
-
-                        <div className="register_todo w100 orientationH spaceBetween center">
-                            <div className="orientationH center">
-                                <label>Qualité du signataire :</label><input type="text" name="ent_name"/>
+                                <label>Nom de l'entreprise :</label><input type="text" name="ent_name" required onChange={(e)=>{setCompanyName(e.target.value)}}/>
                             </div>
                             <div className="status">f</div>
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                             <div className="orientationH center">
-                                <label>RCS + Ville :</label><input type="text" name="ent_name"/>
+                                <label>Nationalité de l'entreprise :</label><input type="text" name="ent_name" required onChange={(e)=>{setCompanyNationality(e.target.value)}}/>
                             </div>
                             <div className="status">f</div>
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                             <div className="orientationH center">
-                                <label>Tel :</label><input type="text" name="ent_name"/>
+                                <label>Qualité du signataire :</label><input type="text" name="ent_name" required onChange={(e)=>{setCompanyRepresentativeStatus(e.target.value)}}/>
                             </div>
                             <div className="status">f</div>
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                             <div className="orientationH center">
-                                <label>Mail :</label><input type="text" name="ent_name"/>
+                                <label>RCS + Ville :</label><input type="text" name="ent_name" required onChange={(e)=>{setCompanyRcs(e.target.value)}}/>
                             </div>
                             <div className="status">f</div>
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                             <div className="orientationH center">
-                                <label>Siège social :</label><input type="text" name="ent_name"/>
+                                <label>Tel :</label><input type="text" name="ent_name" required onChange={(e)=>{setCompanyPhoneNumber(e.target.value)}}/>
                             </div>
                             <div className="status">f</div>
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                             <div className="orientationH center">
-                                <label>Code postal :</label><input type="text" name="ent_name"/>
+                                <label>Siège social :</label><input type="text" name="ent_name" required onChange={(e)=>{setCompanyHeadquarters(e.target.value)}}/>
                             </div>
                             <div className="status">f</div>
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                             <div className="orientationH center">
-                                <label>Ville :</label><input type="text" name="ent_name"/>
+                                <label>Département :</label><input type="text" name="ent_name" required onChange={(e)=>{setCompanyDepartment(e.target.value)}}/>
                             </div>
                             <div className="status">f</div>
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                             <div className="orientationH center">
-                                <label>Pays :</label><input type="text" name="ent_name"/>
+                                <label>Code postal :</label><input type="text" name="ent_name" required onChange={(e)=>{setCompanyZipCode(e.target.value)}}/>
+                            </div>
+                            <div className="status">f</div>
+                        </div>
+                        <div className="register_todo w100 orientationH spaceBetween center">
+                            <div className="orientationH center">
+                                <label>Ville :</label><input type="text" name="ent_name" required onChange={(e)=>{setCompanyCity(e.target.value)}}/>
+                            </div>
+                            <div className="status">f</div>
+                        </div>
+                        <div className="register_todo w100 orientationH spaceBetween center">
+                            <div className="orientationH center">
+                                <label>Adresse :</label><input type="text" name="ent_name" required onChange={(e)=>{setCompanyAddress(e.target.value)}}/>
+                            </div>
+                            <div className="status">f</div>
+                        </div>
+                        <div className="register_todo w100 orientationH spaceBetween center">
+                            <div className="orientationH center">
+                                <label>Pays :</label><input type="text" name="ent_name" required onChange={(e)=>{setCompanyCountry(e.target.value)}}/>
                             </div>
                             <div className="status">f</div>
                         </div> 
-                        <div className="orientationH spaceBetween fromRight "><div className="button full mbem">VALIDER</div></div>
+                        <div className="orientationH spaceBetween fromRight "><div className="button full mbem" onClick={(e)=>{finalization(e)}}>VALIDER</div></div>
                     </div>
-
                 </ShowOrHideLayout>
                 
 

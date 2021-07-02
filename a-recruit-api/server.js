@@ -25,6 +25,9 @@ app.get("/", (req, res) => {
 });
 
 require("./routes/user.routes.js")(app);
+require("./routes/jobs.routes.js")(app);
+require("./routes/company.routes.js")(app);
+require("./routes/cv_bank.routes.js")(app);
 
 // set port, listen for requests
 app.listen(port, () => {

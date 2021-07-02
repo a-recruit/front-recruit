@@ -69,19 +69,14 @@ exports.login = (req, res) => {
           const claims = {user_id : data.user_id, user_name:data.user_name};
           const jwt =  Jwt.sign(claims,TOKEN,{expiresIn: '1h'});
 
-          /*res.setHeader('Set-Cookie',cookie.serialize('auth',jwt,{
-            httpOnly:true,
-            secure:process.env.NODE_ENV !== 'development',
-            sameSite: 'strict',
-            maxAge: 3600,
-            path: "/"
-          }))*/
-
-          res.json({aumessage:jwt});
-          //console.log(jwt)
+          //res.setHeader({'Heade':jwt})
           
+          res.json({authToken:jwt});
+                   
         }else{
+
           res.json({err:401});
+
         }
       }):res.json({err:402});
     }

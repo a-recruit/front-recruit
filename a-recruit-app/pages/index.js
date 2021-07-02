@@ -1,6 +1,4 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import Link from 'next/link'
 import ReactPlayer from 'react-player'
 import AnimatedCustomButton from '../components/others/animated_button'
 import Footer from '../components/footer/footer'

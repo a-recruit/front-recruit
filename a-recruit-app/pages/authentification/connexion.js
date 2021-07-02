@@ -2,9 +2,6 @@ import { useState } from 'react';
 import Axios from 'axios'
 import Head from 'next/head';
 import Link from 'next/link';
-import Header from '../../components/header/back_to_home_header'
-
-
 
 
 
@@ -29,15 +26,16 @@ export default function Connect() {
             }).then(resutlt=>{
 
                 if(!resutlt.data.err){
-                   window.location.href = "../interface/recruteur"
+                    //resutlt.redirect("/")
+                    console.log(resutlt.data)
+                    // window.location.href = "../interface/recruteur"
                 }else {
-                    setAlert("Identifiants et / ou  mot de pass incorrects")
+                    setAlert("Identifiants et / ou  mot de passe incorrects")
                 }
             });
         }
 
        
-
         
     }
    
@@ -48,9 +46,8 @@ export default function Connect() {
             </Head>
 
             <main className="login_signin_background center orientationV">
-                <div className="blure2">
 
-                    <Header/>
+                  
 
                     <div className="login-root">
 
@@ -92,16 +89,15 @@ export default function Connect() {
                                 <div className="footer-link padding-top--24">
                                     <span>Pas encore de compte chez nous ?<Link href="/authentification/inscription"><a> S'inscrire</a></Link></span>
                                     <div className="listing padding-top--24 padding-bottom--24 flex-flex center-center">
-                                    <span><Link href="/inscription"><a> © A recruite</a></Link></span>
-                                    <span><Link href="/inscription"><a> Contacte</a></Link></span>
-                                    <span><Link href="/inscription"><a> Politique de confidentialité</a></Link></span>
+                                    <span><Link href="/authentification/inscription"><a> © A recruite</a></Link></span>
+                                    <span><Link href="/authentification/inscription"><a> Contacte</a></Link></span>
+                                    <span><Link href="/authentification/inscription"><a> Politique de confidentialité</a></Link></span>
                                     </div>
                                 </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
             </main>
            

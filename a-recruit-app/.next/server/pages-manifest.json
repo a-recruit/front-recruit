@@ -2,6 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/authentification/connexion": "pages/authentification/connexion.js",
-  "/authentification/inscription": "pages/authentification/inscription.js"
+  "/": "pages/index.js",
+  "/interface/recruteur": "pages/interface/recruteur.js"
 }
