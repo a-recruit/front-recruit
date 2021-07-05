@@ -39,9 +39,9 @@ exports.signup = (req,res)=>{
 
       if (err){
 
-        res.json({err:401});
+        res.json(err||{err:401});
 
-      }else res.json(data.rows);
+      }else res.json(data.rows[0]);
 
     });
 

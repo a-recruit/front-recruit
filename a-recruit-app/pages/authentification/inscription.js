@@ -7,7 +7,7 @@ import {useRouter} from 'next/router'
 
 
 
-export default function inscription() {
+export default function inscription({dest}) {
     
     const router=useRouter();//donne la personne qui veut s'inscrire 
 
@@ -16,9 +16,8 @@ export default function inscription() {
     const [user_email,setUserEmail]=useState(false);
     const [user_password1,setUserpassword1]=useState(false);
     const [user_password2,setUserpassword2]=useState(false);
-    const [user_right,serUserRight]=useState(router.query.dest);
+    const [user_right,setUserRight]=useState(dest);
     const [alert,setAlert]=useState(false);
-
 
    
 
@@ -41,20 +40,28 @@ export default function inscription() {
                 user_password:user_password1,
                 user_right:user_right
 
-            }).then((resutlt)=>{
-                
-                if(!resutlt.data.err){
+            }).then((result)=>{
 
-                    if(router.query.dest==="RECRUTEUR"){
-
-                        Axios.post('http://localhost:3080/inscription',{//creer une centreprise à son nom
+                console.log(result)
                 
-                        }).then((resutlt2)=>{
+                if(!result.data.err){
+
+                    console.log(result.data)
+
+                    if(router.query.dest==="recruteur"){
+
+                        Axios.post('http://localhost:3080/createCompany',{//creer une centreprise à son nom
+
+                            user_id:result.data.user_id
+
+                        }).then((result2)=>{
                             
-                            
+                            console.log(result2.company_id)
                         });
                     }
-                    window.location.href = `../interface/recruteur/${result.user_id}`
+
+                    window.location.href = `../interface/recruteur`
+
                 }else {
                      setAlert("Deja inscrit")
                 }
@@ -130,7 +137,7 @@ export default function inscription() {
                                 </div>
                             </div>
                             <div className="footer-link padding-top--24">
-                                <span>Vous avez déja un compte ?<Link href="/authentification/connexion"><a> Se connecter</a></Link></span>
+                                <span>Vous avez déja un compte ?<Link href={{pathname :"/authentification/connexion",query:{dest:dest}}}><a> Se connecter</a></Link></span>
                                 <div className="listing padding-top--24 padding-bottom--24 flex-flex center-center">
                                 <span><Link href="/inscription"><a> © A recruite</a></Link></span>
                                 <span><Link href="/inscription"><a> Contacte</a></Link></span>
@@ -145,4 +152,11 @@ export default function inscription() {
             </main>
         </>
     );
+}
+
+export const getServerSideProps = async ({query}) => {
+    const dest = query.dest;
+    return {
+       props: { dest }
+    }
 }

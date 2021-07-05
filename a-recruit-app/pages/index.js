@@ -30,12 +30,12 @@ export default function Home() {
               <AnimatedCustomButton
                 text="JE CHERCHE UN TALENT"
                 link="/authentification/connexion"
-                data="RECRUTEUR"
+                data="recruteur"
               />
               <AnimatedCustomButton
                 text="JE CHERCHE UN EMPLOIE"
-                link="/interface/candidat"
-                data="CANDIDAT"
+                link="/authentification/connexion"
+                data="candidat"
               />
             </div> 
 

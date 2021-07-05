@@ -3,9 +3,9 @@ const Jobs = require("../models/jobs.models.js");
 
 exports.getFillededJob = (req,res)=>{
 
-    const user_id = req.body.user_id
+    const company_id = req.body.company_id
 
-    Jobs.getFillededJob(user_id,(err, data) => {
+    Jobs.getFillededJob(company_id,(err, data) => {
   
         if (err){
   
@@ -19,9 +19,9 @@ exports.getFillededJob = (req,res)=>{
 
 exports.getUnFillededJob = (req,res)=>{
 
-    const user_id = req.body.user_id
+    const company_id = req.body.company_id
 
-    Jobs.getUnFillededJob(user_id,(err, data) => {
+    Jobs.getUnFillededJob(company_id,(err, data) => {
   
         if (err){
   
@@ -35,9 +35,9 @@ exports.getUnFillededJob = (req,res)=>{
 
 exports.getFillededJobLimit4 = (req,res)=>{
 
-    const user_id = req.body.user_id
+    const company_id = req.body.company_id
 
-    Jobs.getFillededJobLimit4(user_id,(err, data) => {
+    Jobs.getFillededJobLimit4(company_id,(err, data) => {
   
         if (err){
   
@@ -51,9 +51,9 @@ exports.getFillededJobLimit4 = (req,res)=>{
 
 exports.getUnFillededJobLimit4 = (req,res)=>{
 
-    const user_id = req.body.user_id
+    const company_id = req.body.company_id
 
-    Jobs.getUnFillededJobLimit4(user_id,(err, data) => {
+    Jobs.getUnFillededJobLimit4(company_id,(err, data) => {
   
         if (err){
   

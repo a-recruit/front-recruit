@@ -11,11 +11,8 @@ import Axios from 'axios'
 export default function recruteur({data}) {
 
     console.log(data)
-
-
-
     //Variables des formulaires
-
+    const company_id=2;
     const [company_name,setCompanyName]=useState(false);
     const [company_nationality, setCompanyNationality]=useState(false);
     const [company_representative_status, setCompanyRepresentativeStatus]=useState(false);
@@ -30,7 +27,6 @@ export default function recruteur({data}) {
     const [is_partner, setIsPartner]=useState(0);
     const [partner_type, setPartnerType]=useState('no');
     const [consultant_id, setConsultantId]=useState(5);
-    const [company_representative_id, setCompanyRepresentative]=useState(25);
     /* Job hooks */
 
     const [job_title, setJobTitle]=useState(false);
@@ -43,7 +39,6 @@ export default function recruteur({data}) {
     const [job_presentation_video, setJobPresentationVideo]=useState('video');
     const [job_city, setJobCity]=useState("Shanghai");
     const [job_zip_code, setJobZipCode]=useState("55452");
-    const [job_creator_id, setJobCreatorId]=useState(26);
     const [job_origin, setJobOrigin]=useState("test");
     const [job_statut, setJobStatut]=useState("available");
     const [job_contract_type, setJobContractType]=useState("CDI");
@@ -51,7 +46,12 @@ export default function recruteur({data}) {
     //Verifier si les infos sur l'entreprise sont tous données
     var register_todo = "A TERMINER";
 
-    if(data.company_info.length !==0){
+    if(!data.company_info.company_name || !data.company_info.company_nationality || !data.company_info.company_phone_number || !data.company_info.company_headquarters || !data.company_info.company_address || !data.company_info.company_department || !data.company_info.company_city
+        || !data.company_info.company_rcs || !data.company_info.company_zip_code || !data.company_info.company_country || !data.company_info.company_representative_status){
+
+            register_todo = "A TERMINER";
+
+    }else{
         register_todo = "TERMINÉ";
     }
 
@@ -69,15 +69,10 @@ export default function recruteur({data}) {
         setShow_hide1(false)
         
         
-        if(!company_name || !company_nationality || !company_phone_number || !company_headquarters || !company_address || !company_department || !company_city
-            || !company_rcs || !company_zip_code || !company_country || !company_representative_status){
+       if(true){
 
-            alert(" Veuillez remplir tous les champs concernat votre entreprise")
-
-        }else{
-
-           Axios.post('http://localhost:3080/createCompany',{
-                
+           Axios.post('http://localhost:3080/updateCompanyInfo',{
+                company_id:company_id,
                 company_name:company_name,
                 company_nationality:company_nationality,
                 company_representative_status:company_representative_status,
@@ -89,7 +84,6 @@ export default function recruteur({data}) {
                 company_zip_code:company_zip_code,
                 company_city:company_city,
                 company_country:company_country,
-                company_representative_id:company_representative_id,
                 is_partner:is_partner,
                 partner_type:partner_type,
                 consultant_id:consultant_id
@@ -108,9 +102,11 @@ export default function recruteur({data}) {
     }
 
     const newJobPosting = (e)=>{
+
         e.preventDefault()
+
         if(!job_title || !job_contract_type || !job_country || !job_department || !job_required_grad || !job_required_level || !job_required_experience
-            || !job_presentation_pdf || !job_presentation_video || !job_city || !job_zip_code || !job_creator_id || !job_origin
+            || !job_presentation_pdf || !job_presentation_video || !job_city || !job_zip_code  || !job_origin
             || !job_statut){
 
                 alert('Veuillez remplire tout les champs')
@@ -130,7 +126,7 @@ export default function recruteur({data}) {
                 job_presentation_video:job_presentation_video,
                 job_city:job_city,
                 job_zip_code:job_zip_code,
-                job_creator_id:job_creator_id,
+                job_creator_id:company_id,
                 job_origin:job_origin,
                 job_statut:job_statut
 
@@ -423,30 +419,24 @@ export default function recruteur({data}) {
 
 export async function getStaticProps() {
 
-    const user_id=25
-    var info = []
+    const company_id=2
+    var company_info = []
 
-    await Axios.post("http://localhost:3080/getCompanyInfo",{user_id:user_id }).
-    then(async (reponse)=>{info= await reponse.data})
-    const company_info = await info
-    
+    await Axios.post("http://localhost:3080/getCompanyInfo",{company_id:company_id }).
+    then(async (reponse)=>{company_info= await reponse.data})
+    console.log(company_info)
+
 
     if(company_info.company_id){
 
         console.log(company_info.company_id)
-        var fillededJobs = []
-        var unFilledJobs = []
+        var company_fillededJobs = []
+        var company_unFilledJobs = []
 
-        await Axios.post("http://localhost:3080/getUnFillededJobLimit4",{user_id:user_id}).
-        then(async (reponse)=>{unFilledJobs= await reponse.data})
-        await Axios.post("http://localhost:3080/getFillededJobLimit4",{user_id:user_id}).
-        then(async (reponse)=>{fillededJobs= await reponse.data})
-
-        //console.log(fillededJobs)
-        
-
-        const company_fillededJobs = await fillededJobs
-        const company_unFilledJobs = await unFilledJobs
+        await Axios.post("http://localhost:3080/getUnFillededJobLimit4",{company_id:company_id }).
+        then(async (reponse)=>{company_unFilledJobs= await reponse.data})
+        await Axios.post("http://localhost:3080/getFillededJobLimit4",{company_id:company_id }).
+        then(async (reponse)=>{company_fillededJobs= await reponse.data})
 
         return {
             props: {

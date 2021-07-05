@@ -20,10 +20,10 @@ const Jobs = function (job) {
   this.job_hire = job.job_hire;
 };
 
-Jobs.getFillededJob = (user_id, result) => {
+Jobs.getFillededJob = (company_id, result) => {
   
     psql.query("SELECT * FROM jobs WHERE job_creator_id = $1 AND job_statut = $2",
-    [user_id,1],
+    [company_id,1],
     (err, res) => {
       if (err) {
         result(err, null);
@@ -34,10 +34,10 @@ Jobs.getFillededJob = (user_id, result) => {
 
 };
 
-Jobs.getUnFillededJob = (user_id, result) => {
+Jobs.getUnFillededJob = (company_id, result) => {
   
   psql.query("SELECT * FROM jobs WHERE job_creator_id = $1 AND job_statut = $2",
-  [user_id,0],
+  [company_id,0],
   (err, res) => {
     if (err) {
       result(err, null);
@@ -49,10 +49,10 @@ Jobs.getUnFillededJob = (user_id, result) => {
 };
 
 
-Jobs.getFillededJobLimit4 = (user_id, result) => {
+Jobs.getFillededJobLimit4 = (company_id, result) => {
   
   psql.query("SELECT * FROM jobs WHERE job_creator_id = $1 AND job_statut = $2 ORDER BY created_at LIMIT 4",
-  [user_id,1],
+  [company_id,1],
   (err, res) => {
     if (err) {
       result(err, null);
@@ -63,10 +63,10 @@ Jobs.getFillededJobLimit4 = (user_id, result) => {
 
 };
 
-Jobs.getUnFillededJobLimit4 = (user_id, result) => {
+Jobs.getUnFillededJobLimit4 = (company_id, result) => {
 
 psql.query("SELECT * FROM jobs WHERE job_creator_id = $1 AND job_statut = $2 ORDER BY created_at LIMIT 4",
-[user_id,0],
+[company_id,0],
 (err, res) => {
   if (err) {
     result(err, null);

@@ -6,6 +6,8 @@ module.exports = app => {
 
     app.post('/createCompany', company.createCompany);
 
+    app.post('/updateCompanyInfo', company.updateCompanyInfo);
+
     app.post('/getCompanyInfo', company.getCompanyInfo);
  
 };

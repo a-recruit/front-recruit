@@ -2,13 +2,11 @@ import { useState } from 'react';
 import Axios from 'axios'
 import Head from 'next/head';
 import Link from 'next/link';
-import {useRouter} from 'next/router'
 
 
 
-export default function Connect() {
+export default function Connect({dest}) {
 
-    const router=useRouter();//donne la personne qui veut se connecter
 
     const [user_email,setUserEmail]=useState(false);
     const [user_password,setUserpassword]=useState(false);
@@ -92,7 +90,7 @@ export default function Connect() {
                                     </div>
                                 </div>
                                 <div className="footer-link padding-top--24">
-                                    <span>Pas encore de compte chez nous ?<Link href={{pathname :"/authentification/inscription",query:{dest:router.query.dest}}}><a> S'inscrire</a></Link></span>
+                                    <span>Pas encore de compte chez nous ?<Link href={{pathname :"/authentification/inscription",query:{dest:dest}}}><a> S'inscrire</a></Link></span>
                                     <div className="listing padding-top--24 padding-bottom--24 flex-flex center-center">
                                     <span><Link href="/authentification/inscription"><a> © A recruite</a></Link></span>
                                     <span><Link href="/authentification/inscription"><a> Contacte</a></Link></span>
@@ -108,4 +106,11 @@ export default function Connect() {
            
         </>
     );
+}
+
+export const getServerSideProps = async ({query}) => {
+    const dest = query.dest;
+    return {
+       props: { dest }
+    }
 }
