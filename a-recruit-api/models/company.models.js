@@ -2,7 +2,7 @@ const psql = require("../configs/db.js");
 
 // constructor
 const Company = function(company) {
-  
+  this.company_id=company.company_id;
   this.company_name = company.company_name;
   this.company_nationality = company.company_nationality;
   this.company_phone_number = company.company_phone_number;
@@ -34,8 +34,9 @@ Company.createCompany =(user_id,result)=>{
 Company.updateCompanyInfo = (company,result)=>{ 
 
   psql.query('UPDATE company SET'+
-  'company_name = $1 AND company_nationality = $2 AND company_address= $3 AND company_department = $4 AND company_representative_status = $5 AND company_phone_number= $6 AND company_headquarters = $7 AND company_city = $8 AND company_rcs = $9 AND company_zip_code =$10 AND company_country = $11 AND is_partner = $12 AND partner_type = $13 AND consultant_id= $14  WHERE company_id = $15',
+  ' company_name =$2 , company_nationality = $3 , company_address= $4 , company_department = $5 , company_representative_status = $6 , company_phone_number= $7 , company_headquarters = $8 , company_city = $9 , company_rcs = $10 , company_zip_code =$11 , company_country = $12 , is_partner = $13 , partner_type = $14 ,consultant_id =$15 WHERE company_id = $1 RETURNING company_id',
   [
+    company.company_id,
     company.company_name,
     company.company_nationality,
     company.company_address,
@@ -49,8 +50,7 @@ Company.updateCompanyInfo = (company,result)=>{
     company.company_country,
     company.is_partner,
     company.partner_type,
-    company.consultant_id,
-    company.company_id
+    company.consultant_id
   ], 
   (err, res) => {
     if (err) {

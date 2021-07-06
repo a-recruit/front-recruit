@@ -22,21 +22,21 @@ const Jobs = function (job) {
 
 Jobs.getFillededJob = (company_id, result) => {
   
-    psql.query("SELECT * FROM jobs WHERE job_creator_id = $1 AND job_statut = $2",
-    [company_id,1],
-    (err, res) => {
-      if (err) {
-        result(err, null);
-        return;
-      }
-      result(null,res);
-    });
+  psql.query("SELECT job_title,to_char(created_at, 'TMDay TMDD TMmonth YYYY') as created_at,job_hire FROM jobs WHERE job_creator_id = $1 AND job_statut = $2",
+  [company_id,1],
+  (err, res) => {
+    if (err) {
+      result(err, null);
+      return;
+    }
+    result(null,res);
+  });
 
 };
 
 Jobs.getUnFillededJob = (company_id, result) => {
   
-  psql.query("SELECT * FROM jobs WHERE job_creator_id = $1 AND job_statut = $2",
+  psql.query("SELECT job_title,to_char(created_at, 'TMDay TMDD TMmonth YYYY') as created_at,job_hire FROM jobs WHERE job_creator_id = $1 AND job_statut = $2",
   [company_id,0],
   (err, res) => {
     if (err) {
@@ -51,7 +51,7 @@ Jobs.getUnFillededJob = (company_id, result) => {
 
 Jobs.getFillededJobLimit4 = (company_id, result) => {
   
-  psql.query("SELECT * FROM jobs WHERE job_creator_id = $1 AND job_statut = $2 ORDER BY created_at LIMIT 4",
+  psql.query("SELECT job_title,to_char(created_at, 'TMDay TMDD TMmonth YYYY') as created_at,job_hire FROM jobs WHERE job_creator_id = $1 AND job_statut = $2 ORDER BY created_at LIMIT 4",
   [company_id,1],
   (err, res) => {
     if (err) {
@@ -65,15 +65,15 @@ Jobs.getFillededJobLimit4 = (company_id, result) => {
 
 Jobs.getUnFillededJobLimit4 = (company_id, result) => {
 
-psql.query("SELECT * FROM jobs WHERE job_creator_id = $1 AND job_statut = $2 ORDER BY created_at LIMIT 4",
-[company_id,0],
-(err, res) => {
-  if (err) {
-    result(err, null);
-    return;
-  }
-  result(null,res);
-});
+  psql.query("SELECT job_title,to_char(created_at, 'TMDay TMDD TMmonth YYYY') as created_at,job_hire FROM jobs WHERE job_creator_id = $1 AND job_statut = $2 ORDER BY created_at LIMIT 4;",
+  [company_id,0],
+  (err, res) => {
+    if (err) {
+      result(err, null);
+      return;
+    }
+    result(null,res);
+  });
 
 };
 
@@ -81,15 +81,14 @@ psql.query("SELECT * FROM jobs WHERE job_creator_id = $1 AND job_statut = $2 ORD
 Jobs.createjob = (newJob, result) => {
 
   psql.query('INSERT INTO jobs (job_title,job_contract_type,job_presentation_pdf,job_presentation_video,job_country,job_department,job_city,job_zip_code,job_required_level,job_required_grad, job_required_experience, job_creator_id, job_origin) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING job_id;',
-  [newJob.job_title,newJob.job_contract_type,newJob.job_presentation_pdf,newJob.job_presentation_video,newJob.job_country, newJob.job_department, newJob.job_city, newJob.job_zip_code, newJob.job_required_level, newJob.job_required_grad, newJob.job_required_experience, newJob.job_creator_id, newJob.job_origin], 
-  (err, res) => {
-    
-    if (err) {
-      result(err, null); 
-      return;
-    }
-    result(null,res);
-});
+    [newJob.job_title,newJob.job_contract_type,newJob.job_presentation_pdf,newJob.job_presentation_video,newJob.job_country, newJob.job_department, newJob.job_city, newJob.job_zip_code, newJob.job_required_level, newJob.job_required_grad, newJob.job_required_experience, newJob.job_creator_id, newJob.job_origin], 
+    (err, res) => {
+      if (err) {
+        result(err, null); 
+        return;
+      }
+      result(null,res);
+  });
 }
 
 module.exports = Jobs;

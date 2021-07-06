@@ -116,6 +116,7 @@ a {
 
 /******BUTTON***********/
 .button{
+  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -124,12 +125,19 @@ a {
   padding-left: var(--font-M);
   padding-right: var(--font-M);
   border-radius: 5px;
-  font-size: 0.7em;
+  font-size: 0.8em;
   text-align: center;
   color: #fff;
   font-weight: 900;
   margin-right: 0.5em;
   cursor: pointer;
+  background-color: transparent;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.sh_button{
+  margin-top: 0.4em;;
 }
 
 .unfinished{
@@ -150,6 +158,12 @@ a {
 
 .alert{
   color: red;
+}
+
+.interface-layout{
+  font-size: 0.85em;
+  background-color: #f9f9f9f9;
+
 }
 
   

@@ -27,10 +27,11 @@ pool.connect(error => {
 
 });
 
-/*
-pool.query(dbSchema,(err,res)=>{
-  if (error) throw error;
-  console.log("Tables crées.");
-})
-*/
+
+pool.query("SET LC_TIME = 'French';",
+(err,res)=>{
+  if (err) throw err;
+  console.log("Données configurées en Français.");
+});
+
 module.exports = pool;

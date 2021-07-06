@@ -176,6 +176,10 @@
       font-weight: 600;
       cursor: pointer;
   }
+  .option-selected{
+      color: rgba(128, 128, 128, 0.652);
+  }
+  
   .field-checkbox input {
       width: 20px;
       height: 15px;
