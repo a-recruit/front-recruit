@@ -62,7 +62,7 @@ Company.updateCompanyInfo = (company,result)=>{
 }
 
 Company.getCompanyInfo = (user_id,result)=>{
-  psql.query('SELECT company_id,company_name,company_nationality,company_representative_status,company_rcs,company_phone_number,company_headquarters,company_department,company_zip_code,company_city,company_address,company_country FROM company WHERE company_representative_id = $1',[user_id],
+  psql.query('SELECT * FROM company WHERE company_representative_id = $1',[user_id],
   (err, res) => {
     if (err) {
       result(err, null);

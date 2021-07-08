@@ -41,11 +41,29 @@ exports.signup = (req,res)=>{
 
         res.json(err||{err:401});
 
-      }else res.json(data.rows[0]);
+      }else {
+        const claims = {user_id : data.rows[0].user_id, user_name:data.rows[0].user_name,user_firstname: data.rows[0].user_firstname};
+        const jwt =  Jwt.sign(claims,TOKEN,{expiresIn: '1h'});
+
+        res.json({user_info:data.rows[0],jwt});
+      }
 
     });
 
   }); 
+}
+
+exports.createUserInfo =(req,res)=>{
+
+  const user_id = req.body.user_id
+
+  User.createUserInfo(user_id,(err,data)=>{
+      if (err){
+
+        res.json(err||{err:401});
+
+      }else res.json(data.rows[0]);
+  })
 }
 
 exports.login = (req, res) => {
@@ -66,12 +84,12 @@ exports.login = (req, res) => {
       data? bcrypt.compare(user.user_password,data.user_password,function(err,result){
         if(!err && result){
 
-          const claims = {user_id : data.user_id, user_name:data.user_name};
+          const claims = {user_id : data.user_id, user_name:data.user_name,user_firstname: data.user_firstname};
           const jwt =  Jwt.sign(claims,TOKEN,{expiresIn: '1h'});
 
           //res.setHeader({'Heade':jwt})
           
-          res.json({authToken:jwt});
+          res.json(jwt);
                    
         }else{
 

@@ -52,9 +52,9 @@ exports.updateCompanyInfo = (req,res)=>{
 
 exports.getCompanyInfo = (req,res)=>{
 
-  const company_id= req.body.company_id;
+  const user_id= req.body.user_id;
 
-  Company.getCompanyInfo(company_id,(err, data) => {
+  Company.getCompanyInfo(user_id,(err, data) => {
 
     if (err){
 

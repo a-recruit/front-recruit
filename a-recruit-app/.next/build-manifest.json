@@ -24,20 +24,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/authentification/connexion": [
+    "/authentification/inscription": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/authentification/connexion.js"
+      "static/chunks/pages/authentification/inscription.js"
     ],
     "/interface/recruteur": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/interface/recruteur.js"
-    ],
-    "/interface/recruteur/allJobs": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/interface/recruteur/allJobs.js"
     ]
   },
   "ampFirstPages": []

@@ -7,35 +7,109 @@ import ShowOrHideLayout from '../../../components/layouts/show_hide_layout'
 import WrapListLayout from '../../../components/layouts/wrap_list_layout'
 import Agenda from '../../../components/others/agenda'
 import Axios from 'axios'
-
+import jwt_decode from 'jwt-decode'
+import ReactLocalStorage  from 'reactjs-localstorage'
 
 export default function recruteur({data}) {
 
     const diplomes = ['CAP', 'BEP', 'BAC', 'BTS/DUT', 'Licence', 'Master1', 'Master2', 'Doctorat'];
     const niveauEtudes = ['BAC', 'BAC+1', 'BAC+2', 'BAC+3', 'BAC+4', 'BAC+5', 'BAC+6', 'BAC+7', 'BAC+8'];
     const experience = ['débutant', '1 an à 2 ans', '2 ans à 3 ans', '3 ans à 4 ans', '4 ans à 5 ans' , '5 ans et plus (Senior)'];
+    
+    const [europe_country,setEuropeCountry] = useState([]);
+    const [departments,setDepartments]= useState([]);
+    const [company_info,setCompanyInfo] = useState([]);
+    const [company_fillededJobs,setCompanyFilledeJobs] = useState([]);
+    const [company_unFilledJobs,setCompanyUnfillededJobs] = useState([]);
 
-    // console.log(data)
+    //chargement des données de l'interface
 
-    //Variables des formulaires
+    useEffect(() => {
 
-    const company_id=2;
-    const [company_name,setCompanyName]=useState(data.company_info.company_name);
-    const [company_nationality, setCompanyNationality]=useState(data.company_info.company_nationality);
-    const [company_representative_status, setCompanyRepresentativeStatus]=useState(data.company_info.company_representative_status);
-    const [company_rcs, setCompanyRcs]=useState(data.company_info.company_rcs);
-    const [company_headquarters, setCompanyHeadquarters]=useState(data.company_info.company_headquarters);
-    const [company_zip_code, setCompanyZipCode]=useState(data.company_info.company_zip_code);
-    const [company_address, setCompanyAddress]=useState(data.company_info.company_address);
-    const [company_department, setCompanyDepartment]=useState(data.company_info.company_department);
-    const [company_phone_number, setCompanyPhoneNumber]=useState(data.company_info.company_phone_number);
-    const [company_city, setCompanyCity]=useState(data.company_info.company_city);
-    const [company_country, setCompanyCountry]=useState(data.company_info.company_country);
-    const [is_partner, setIsPartner]=useState(data.company_info.is_partner);
-    const [partner_type, setPartnerType]=useState(data.company_info.partner_type);
-    const [consultant_id, setConsultantId]=useState(data.company_info.consultant_id);
-    /* Job hooks */
+        const  localdata= ReactLocalStorage.reactLocalStorage.getObject('jwt')
+        const  loded_user = jwt_decode(JSON.stringify(localdata)) 
+       
+        ///Chargement des données régionnaux pour les formulaires
 
+        Axios.get("https://restcountries.eu/rest/v2/region/europe?fields=name", {europe : europe_country})
+        .then( (reponse)=>{ setEuropeCountry(reponse.data)} )
+
+
+        //console.log(loded_user.user_id)
+        ///Chargement des donnéés concernant l'utilisateur
+
+         Axios.post("http://localhost:3080/getCompanyInfo",
+        {
+            user_id:loded_user.user_id
+
+        }). then( (reponse)=>{
+
+            setCompanyInfo(reponse.data)
+
+            if(reponse.data.company_id){
+    
+                    Axios.post("http://localhost:3080/getUnFillededJobLimit4",{company_id:reponse.data.company_id }).
+                then( (reponse)=>{setCompanyUnfillededJobs(reponse.data)})
+                    Axios.post("http://localhost:3080/getFillededJobLimit4",{company_id:reponse.data.company_id}).
+                then( (reponse)=>{setCompanyFilledeJobs(reponse.data)})
+            }
+        
+        })
+
+      
+       
+
+    }, [])
+
+    useEffect(() => {
+
+        if(company_info.company_country==="France"){
+            Axios.get("https://geo.api.gouv.fr/departements")
+            .then( (reponse)=>{setDepartments(reponse.data);console.log(reponse.data)});
+        }
+        
+    }, [company_info])
+   
+    
+    //Chargement des départements  et des villes :
+
+    let cities =[];
+    const  loadDepartment =  (coutry) =>  {
+        if(coutry==="France" ){
+            Axios.get("https://geo.api.gouv.fr/departements")
+            .then( (reponse)=>{setDepartments(reponse.data)});
+        }
+    }
+
+    const loadCity = (code) => {
+
+       Axios.get(`https://geo.api.gouv.fr/departements/${code}/communes`)
+       .then((reponse)=>{villes = reponse.data})
+       console.log({"villes" : villes})
+    }
+    
+
+    //VARIABLE POUR LES FORMULAIRES
+
+    //Formulair 1 ( TERMINER L'INSCRIPTION)
+    const company_id=company_info.company_id;
+    const [company_name,setCompanyName]=useState(company_info.company_name);
+    const [company_nationality, setCompanyNationality]=useState(company_info.company_nationality);
+    const [company_representative_status, setCompanyRepresentativeStatus]=useState(company_info.company_representative_status);
+    const [company_rcs, setCompanyRcs]=useState(company_info.company_rcs);
+    const [company_headquarters, setCompanyHeadquarters]=useState(company_info.company_headquarters);
+    const [company_zip_code, setCompanyZipCode]=useState(company_info.company_zip_code);
+    const [company_address, setCompanyAddress]=useState(company_info.company_address);
+    const [company_department, setCompanyDepartment]=useState(company_info.company_department);
+    const [company_phone_number, setCompanyPhoneNumber]=useState(company_info.company_phone_number);
+    const [company_city, setCompanyCity]=useState(company_info.company_city);
+    const [company_country, setCompanyCountry]=useState(company_info.company_country);
+    const [is_partner, setIsPartner]=useState(company_info.is_partner);
+    const [partner_type, setPartnerType]=useState(company_info.partner_type);
+    const [consultant_id, setConsultantId]=useState(company_info.consultant_id);
+
+    //console.log(company_info)
+    //Formulaire 2 ( Demande d'offre d'emploie )
     const [job_title, setJobTitle]=useState(false);
     const [job_country, setJobCountry]=useState('RPC');
     const [job_department, setJobDepartment]=useState('Yunan');
@@ -50,11 +124,14 @@ export default function recruteur({data}) {
     const [job_statut, setJobStatut]=useState("available");
     const [job_contract_type, setJobContractType]=useState("CDI");
 
+
     //Verifier si les infos sur l'entreprise sont tous données
+
     var register_todo = "A TERMINER";
 
     if(company_name=== "false" || company_nationality=== "false" || company_phone_number=== "false" || company_headquarters=== "false" || company_address=== "false" || company_department=== "false" || company_city
-       === "false" || company_rcs=== "false" || company_zip_code=== "false" || company_country=== "false" || company_representative_status==="false"){
+       === "false" || company_rcs=== "false" || company_zip_code=== "false" || company_country=== "false" || company_representative_status==="false" || !company_name|| !company_nationality|| !company_phone_number|| !company_headquarters|| !company_address|| !company_department|| !company_city
+       || !company_rcs|| !company_zip_code|| !company_country|!company_representative_status ){
 
             register_todo = "A TERMINER";
 
@@ -62,13 +139,14 @@ export default function recruteur({data}) {
         register_todo = "TERMINÉ";
     }
 
+
     let reloade=true;
     
-    //Ancre 
+    //Ancre ( pour ouvir et fermer les formulaires déroulant)
     const [show_hide1, setShow_hide1] =useState("");
     const [show_hide2, setShow_hide2] =useState(false);
 
-    //Allerte
+    //( pour recharger la page après la validation des formulaires)
     useEffect(()=>{
 
     },reloade)
@@ -98,7 +176,7 @@ export default function recruteur({data}) {
 
             }).then((resutlt)=>{
                 
-                if(!resutlt.data.err){
+                if(!resutlt.err){
                     
                    
                 }else {
@@ -141,41 +219,17 @@ export default function recruteur({data}) {
 
             }).then((resutlt)=>{
                 
-                if(!resutlt.data.err){
+                if(!resutlt.err){
                     window.location.href = `../interface/recruteur`
                 }else {
-                     setAlert("Merci de remplir tous les champs")
+                     alert("Merci de remplir tous les champs")
                 }
             });
             console.log(newJobPosting);
         }
     }
 
-//Chargement des départements  et des villes :
 
-    useEffect(()=>{
-
-        if(data.company_info && data.company_info.company_country==="France"){
-            Axios.get("https://geo.api.gouv.fr/departements")
-            .then(async (reponse)=>{setDepartments(reponse.data)});
-        }
-    },[])
-
-    const [departments,setDepartments] = useState([]);
-    let cities =[];
-    const  loadDepartment =  (coutry) =>  {
-        if(coutry==="France" ){
-            Axios.get("https://geo.api.gouv.fr/departements")
-            .then(async (reponse)=>{setDepartments(reponse.data)});
-        }
-    }
-
-    const loadCity = (code) => {
-
-       Axios.get(`https://geo.api.gouv.fr/departements/${code}/communes`)
-       .then((reponse)=>{villes = reponse.data})
-       console.log({"villes" : villes})
-    }
 
 
     return (
@@ -202,15 +256,15 @@ export default function recruteur({data}) {
                         <div className="underline register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
                                 <label>Nom de l'entreprise :</label>
-                                <input placeholder={data.company_info.company_name ? data.company_info.company_name : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyName(e.target.value)}}/>
+                                <input placeholder={company_info.company_name ? company_info.company_name : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyName(e.target.value)}}/>
                             </div>
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
                                 <label>Pays :</label>
                                 <select className="form_select" required onChange={(e)=>{setCompanyCountry(e.target.value);loadDepartment(e.target.value)}}>
-                                    {data.europe_country.map((element, index) => {
-                                        if(data.company_info.company_country && element.name===data.company_info.company_country){
+                                    {europe_country.map((element, index) => {
+                                        if(company_info.company_country && element.name===company_info.company_country){
                                             return <option className="option-selected" selected key={index} value={element.name}>{element.name}</option>
                                         }else{
                                             return <option key={index} value={element.name}>{element.name}</option>
@@ -222,67 +276,68 @@ export default function recruteur({data}) {
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
                                 <label>Département :</label>
-                                <select className="form_select" required onChange={(e)=>{setCompanyDepartment(e.target.value)}}>
-                                <option>Selectionnez un departement</option>
+                                {(departments.length!==0 || company_info.company_department)? 
+                                    <select className="form_select" required onChange={(e)=>{setCompanyDepartment(e.target.value)}}>
+                                        <option>Selectionnez un departement</option>
 
-                                    {departments.length!==0 ? 
-                                        departments.map((element, index) => {
-                                            if(data.company_info.company_department && element.nom===data.company_info.company_department){
-                                                return <option className="option-selected" selected key={index}>{element.nom}</option>
-                                            }else{
-                                                return <option key={index}>{element.nom}</option>
-                                            }
-                                        })
-                                    :                                
-                                        <input placeholder={data.company_info.company_department? data.company_info.company_department : "..."}type="text" name="ent_name"  onChange={(e)=>{setCompanyDepartment(e.target.value)}}/> 
-                                    }
-                                </select>
+                                        {departments.map((element, index) => {
+                                                if(company_info.company_department && element.nom===company_info.company_department){
+                                                    return <option className="option-selected" selected key={index}>{element.nom}</option>
+                                                }else{
+                                                    return <option key={index}>{element.nom}</option>
+                                                }
+                                            })}
+                                            
+                                    </select>
+                                :                                
+                                <input placeholder={company_info.company_department? company_info.company_department : "..."}type="text" name="ent_name"  onChange={(e)=>{setCompanyDepartment(e.target.value)}}/> 
+                            }
 
                             </div>
                             
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>Adresse :</label><input placeholder={data.company_info.company_address ? data.company_info.company_address : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyAddress(e.target.value)}}/>
+                                <label>Adresse :</label><input placeholder={company_info.company_address ? company_info.company_address : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyAddress(e.target.value)}}/>
                             </div>      
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>Ville :</label><input placeholder={data.company_info.company_city ? data.company_info.company_city : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyCity(e.target.value)}}/>
+                                <label>Ville :</label><input placeholder={company_info.company_city ? company_info.company_city : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyCity(e.target.value)}}/>
                             </div>
                             
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>Code postal :</label><input placeholder={data.company_info.company_zip_code ? data.company_info.company_zip_code : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyZipCode(e.target.value)}}/>
+                                <label>Code postal :</label><input placeholder={company_info.company_zip_code ? company_info.company_zip_code : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyZipCode(e.target.value)}}/>
                             </div> 
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
                                 <label>Nationalité de l'entreprise :</label>
-                                <input placeholder={data.company_info.company_nationality? data.company_info.company_nationality: "..."}type="text" name="ent_name"  onChange={(e)=>{setCompanyNationality(e.target.value)}}/>
+                                <input placeholder={company_info.company_nationality? company_info.company_nationality: "..."}type="text" name="ent_name"  onChange={(e)=>{setCompanyNationality(e.target.value)}}/>
                             </div>      
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>Siège social :</label><input placeholder={data.company_info.company_headquarters ? data.company_info.company_headquarters : "..."}type="text" name="ent_name"  onChange={(e)=>{setCompanyHeadquarters(e.target.value)}}/>
+                                <label>Siège social :</label><input placeholder={company_info.company_headquarters ? company_info.company_headquarters : "..."}type="text" name="ent_name"  onChange={(e)=>{setCompanyHeadquarters(e.target.value)}}/>
                             </div>
                             
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>RCS + Ville :</label><input placeholder={data.company_info.company_rcs ? data.company_info.company_rcs : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyRcs(e.target.value)}}/>
+                                <label>RCS + Ville :</label><input placeholder={company_info.company_rcs ? company_info.company_rcs : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyRcs(e.target.value)}}/>
                             </div>
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
                                 <label>Qualité du signataire :</label>
-                                <input placeholder={data.company_info.company_representative_status ? data.company_info.company_representative_status : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyRepresentativeStatus(e.target.value)}}/>
+                                <input placeholder={company_info.company_representative_status ? company_info.company_representative_status : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyRepresentativeStatus(e.target.value)}}/>
                             </div>                         
                         </div>
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
-                                <label>Tel :</label><input placeholder={data.company_info.company_phone_number ? data.company_info.company_phone_number : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyPhoneNumber(e.target.value)}}/>
+                                <label>Tel :</label><input placeholder={company_info.company_phone_number ? company_info.company_phone_number : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyPhoneNumber(e.target.value)}}/>
                             </div>
                             
                         </div>
@@ -320,7 +375,7 @@ export default function recruteur({data}) {
                     title= "DEMANDES EN COURS ..............."
                     linkForMore=""
                 >
-                    {data.company_unFilledJobs.length!==0 ? data.company_unFilledJobs.map((job, index) => {
+                    {company_unFilledJobs.length!==0 ? company_unFilledJobs.map((job, index) => {
                         return (
                             <div className="demande" key={index}>
                                 <label>{job.job_title}</label>
@@ -329,12 +384,12 @@ export default function recruteur({data}) {
                             </div>
                         );
                     })
-                    : null}
-                    <Link  href={{pathname:"/interface/recruteur/allJobs",query:{dest:"unfilled"}}}>
+                    : <div>AUCUNE DEMANDE EN COURS</div>}
+                    {company_unFilledJobs.length === 4 && <Link  href={{pathname:"/interface/recruteur/allJobs",query:{dest:"unfilled"}}}>
                         <a>
                             <div className="show_more">voir plus {">>"}</div>
                         </a>
-                    </Link>
+                    </Link>}
                    
                    
                 </WrapListLayout>
@@ -345,7 +400,7 @@ export default function recruteur({data}) {
                     title= "DERNIÈRES DEMANDES "
                     linkForMore=""
                 >
-                   {data.company_fillededJobs.length!==0 ? data.company_fillededJobs.map((job, index) => {
+                   {company_fillededJobs.length!==0 ? company_fillededJobs.map((job, index) => {
                         return (
                             <div className="demande" key={index}>
                                 <label>{job.job_title}</label>
@@ -364,11 +419,11 @@ export default function recruteur({data}) {
                             </a>
                         </Link>
                     </div>
-                    <Link  href={{pathname:"/interface/recruteur/allJobs",query:{dest:"filled"}}}>
+                    {company_fillededJobs.length === 4 && <Link  href={{pathname:"/interface/recruteur/allJobs",query:{dest:"filled"}}}>
                         <a>
                             <div className="show_more">voir plus {">>"}</div>
                         </a>
-                    </Link>
+                    </Link>}
                 </WrapListLayout>
                 
                 {/* NOUVELLE DEMANDE FORMULAIRE */}
@@ -394,7 +449,7 @@ export default function recruteur({data}) {
                                         <label>Pays :</label>
                                         <select className="form_select" required onChange={(e)=>{setJobCountry(e.target.value)}}>
                                             <option>--Pays--</option>
-                                            {data.europe_country.map((element, index) => {
+                                            {europe_country.map((element, index) => {
                                                 return <option key={index} value={element.name}>{element.name}</option>
                                             })}
                                         </select>
@@ -403,16 +458,17 @@ export default function recruteur({data}) {
                                 <div className="register_todo w100 orientationH spaceBetween center">
                                      <div className="w100 orientationH spaceBetween center">
                                         <label>Departement :</label>
-                                        <select className="form_select" required onChange={(e)=>{setJobDepartment(e.target.value)}}>
-                                            <option>--Departement--</option>
-                                            {departments.length!==0 ? 
-                                                departments.map((element, index) => {
-                                                    return <option key={index}>{element.nom}</option>
-                                                })
-                                            :                                
-                                                <input placeholder={data.company_info.company_department? data.company_info.company_department : "..."}type="text" name="ent_name"  onChange={(e)=>{setCompanyDepartment(e.target.value)}}/> 
-                                            }
-                                        </select>
+                                        {departments.length!==0 ?
+                                            <select className="form_select" required onChange={(e)=>{setJobDepartment(e.target.value)}}>
+                                                <option>--Departement--</option>
+                                                {departments.map((element, index) => {
+                                                        return <option key={index}>{element.nom}</option>
+                                                })}
+                                            
+                                            </select>
+                                         :                                
+                                         <input placeholder={company_info.company_department? company_info.company_department : "..."}type="text" name="ent_name"  onChange={(e)=>{setCompanyDepartment(e.target.value)}}/> 
+                                     }
                                     </div>
                                 </div>
                                 <div className="register_todo w100 orientationH spaceBetween center">
@@ -509,57 +565,58 @@ export default function recruteur({data}) {
     )
 }
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
 
-    let europe_country = [];
-    const company_id=2
-    var company_info = []
-    var company_fillededJobs = []
-    var company_unFilledJobs = []
+//     let europe_country = [];
+//     const company_id=2
+//     var company_info = []
+//     var company_fillededJobs = []
+//     var company_unFilledJobs = []
   
-    ///Chargement des données régionnaux pour les formulaires
+//     ///Chargement des données régionnaux pour les formulaires
 
-    await Axios.get("https://restcountries.eu/rest/v2/region/europe?fields=name", {europe : europe_country})
-    .then(async (reponse)=>{europe_country = await reponse.data})
-
-
-    ///Chargement des donnéés concernant l'utilisateur
-
-    await Axios.post("http://localhost:3080/getCompanyInfo",{company_id:company_id }).
-    then(async (reponse)=>{company_info= await reponse.data})
+//     await Axios.get("https://restcountries.eu/rest/v2/region/europe?fields=name", {europe : europe_country})
+//     .then(async (reponse)=>{europe_country = await reponse.data})
 
 
-    if(company_info.company_id){
+//     ///Chargement des donnéés concernant l'utilisateur
 
-        await Axios.post("http://localhost:3080/getUnFillededJobLimit4",{company_id:company_id }).
-        then(async (reponse)=>{company_unFilledJobs= await reponse.data})
-        await Axios.post("http://localhost:3080/getFillededJobLimit4",{company_id:company_id }).
-        then(async (reponse)=>{company_fillededJobs= await reponse.data})
+//     await Axios.post("http://localhost:3080/getCompanyInfo",{company_id:company_id }).
+//     then(async (reponse)=>{company_info= await reponse.data})
 
-        return {
-            props: {
-                data:{
-                    company_info:company_info,
-                    company_unFilledJobs:company_unFilledJobs,
-                    company_fillededJobs:company_fillededJobs,
-                    europe_country:europe_country,
-                }
-            }, // will be passed to the page component as props
-        }
+
+//     if(company_info.company_id){
+
+//         await Axios.post("http://localhost:3080/getUnFillededJobLimit4",{company_id:company_id }).
+//         then(async (reponse)=>{company_unFilledJobs= await reponse.data})
+//         await Axios.post("http://localhost:3080/getFillededJobLimit4",{company_id:company_id }).
+//         then(async (reponse)=>{company_fillededJobs= await reponse.data})
+
+//         return {
+//             props: {
+//                 data:{
+//                     company_info:company_info,
+//                     company_unFilledJobs:company_unFilledJobs,
+//                     company_fillededJobs:company_fillededJobs,
+//                     europe_country:europe_country,
+//                 }
+//             }, // will be passed to the page component as props
+//         }
         
 
-    }else {
+//     }else {
 
-        return{
-            props: {
-                data:{
-                    company_info:[],
-                    company_unFilledJobs:[],
-                    company_fillededJobs:[],
-                    europe_country : [],
-                }
-            }
-        }
-    }
+//         return{
+//             props: {
+//                 data:{
+//                     company_info:[],
+//                     company_unFilledJobs:[],
+//                     company_fillededJobs:[],
+//                     europe_country : [],
+//                 }
+//             }
+//         }
+//     }
 
-}
+// }
+

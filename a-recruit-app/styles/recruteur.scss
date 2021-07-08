@@ -112,10 +112,8 @@
     }
 
     .calendrier{
-        display: flex;
-        width: 80%;
-        align-items: center;
-        justify-content: center;
+        margin: 0 auto;
+        width: 90%;
     }
 }
 
@@ -160,6 +158,10 @@
     .show_more{
         max-height: 10px;
         padding: 1em;
+    }
+    .calendrier{
+        margin: 0 auto;
+        width: 90%;
     }
 
 }

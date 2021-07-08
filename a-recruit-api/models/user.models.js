@@ -131,15 +131,29 @@ User.test = (result)=>{
 
 User.signup = (newUser,result)=>{ 
 
-  psql.query('INSERT INTO users  (user_name,user_firstname,user_email,user_password,user_right) VALUES ($1,$2,$3,$4,$5) RETURNING user_id;',
+  psql.query('INSERT INTO users  (user_name,user_firstname,user_email,user_password,user_right) VALUES ($1,$2,$3,$4,$5) RETURNING user_id, user_name,user_firstname;',
   [newUser.user_name,newUser.user_firstname,newUser.user_email,newUser.user_password,newUser.user_right], 
   (err, res) => {
     if (err) {
       result(err, null);
       return;
     }
+      result(null,res);
+  });
+}
+
+User.createUserInfo = (user_id,result)=>{
+
+  psql.query('INSERT INTO user_info  (user_id)  VALUES ($1) ;',
+    [user_id], 
+    (err, res) => {
+    if (err) {
+      result(err, null);
+      return;
+    }
     result(null,res);
   });
+
 }
 
 User.login = (lodedUser, result) => {

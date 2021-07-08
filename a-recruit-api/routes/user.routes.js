@@ -4,9 +4,11 @@ module.exports = app => {
 
     app.get("/test",user.test);
 
-    app.post("/inscription",user.signup);
+    app.post("/signup",user.signup);
 
-    app.post("/connexion",user.login);
+    app.post('/createUserInfo',user.createUserInfo);
+
+    app.post("/login",user.login);
 
     app.post("/DB_CREATE",user.createDb);
 

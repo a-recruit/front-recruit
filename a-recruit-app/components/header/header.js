@@ -1,10 +1,24 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import Link from 'next/link'
+import ReactLocalStorage from 'reactjs-localstorage'
+import jwt_decode from 'jwt-decode'
 
 
 export default function header() {
-    
-    //const user_img = require('../../public/images/icon_def_usr.png');
+
+    const [user,setUser]=useState("");
+
+    useEffect(() => {
+        let data={};
+        data= ReactLocalStorage.reactLocalStorage.getObject('jwt');
+        //decoder
+        let decoded = jwt_decode(JSON.stringify(data))
+        setUser(decoded)
+    }, [])
+
+   // console.log(user)
+
+
     const nb_notif = 5;
 
     return (
@@ -23,7 +37,7 @@ export default function header() {
                     <div className="user_icon_z">
                         <img className="icon" src="/images/icon_def_usr.png" alt='noti_icon'/>
                     </div>
-                    <div className="user_name_z">Zinedine PIRO</div>
+                    <div className="user_name_z">{""+user.user_name + " " + user.user_firstname}</div>
                 </div>
                 
             </div>

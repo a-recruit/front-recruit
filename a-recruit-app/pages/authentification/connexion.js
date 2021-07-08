@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Axios from 'axios'
 import Head from 'next/head';
 import Link from 'next/link';
+import ReactLocalStorage from 'reactjs-localstorage'
 
 
 
@@ -21,7 +22,7 @@ export default function Connect({dest}) {
             setAlert(" Veuillez remplir tous les champs pour vous inscrire")
         }else{
 
-           Axios.post('http://localhost:3080/connexion',{
+           Axios.post('http://localhost:3080/login',{
 
                 user_email:user_email,
                 user_password:user_password
@@ -31,7 +32,10 @@ export default function Connect({dest}) {
                 if(!resutlt.data.err){
                     //resutlt.redirect("/")
                     //console.log(resutlt.data)
-                     window.location.href = "../interface/recruteur"
+                    ReactLocalStorage.reactLocalStorage.setObject('jwt',{jwt:resutlt.data});
+                    ReactLocalStorage.reactLocalStorage.get('jwt', true);
+
+                    window.location.href =`../interface/recruteur`;
                 }else {
                     setAlert("Identifiants et / ou  mot de passe incorrects")
                 }

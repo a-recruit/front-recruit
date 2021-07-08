@@ -4,6 +4,9 @@ import Link from 'next/link';
 import Axios from 'axios'
 import {useRouter} from 'next/router'
 
+import ReactLocalStorage  from 'reactjs-localstorage';
+
+
 
 
 
@@ -22,6 +25,7 @@ export default function inscription({dest}) {
    
 
     const inscription = (e)=>{
+
         e.preventDefault()
         if(user_password1 !== user_password2){
 
@@ -32,7 +36,7 @@ export default function inscription({dest}) {
             setAlert(" Veuillez remplir tous les champs pour vous inscrire")
         }else{
 
-           Axios.post('http://localhost:3080/inscription',{
+           Axios.post('http://localhost:3080/signup',{
                 
                 user_name:user_name,
                 user_firstname:user_firstname,
@@ -52,13 +56,22 @@ export default function inscription({dest}) {
 
                         Axios.post('http://localhost:3080/createCompany',{//creer une centreprise à son nom
 
-                            user_id:result.data.user_id
+                            user_id:result.data.user_info.user_id
 
-                        }).then((result2)=>{
-                            
-                            console.log(result2.company_id)
                         });
                     }
+
+                    //creer unser_info
+                    Axios.post('http://localhost:3080/createUserInfo',{//creer une centreprise à son nom
+
+                            user_id:result.data.user_info.user_id
+
+                    });
+
+
+                    ReactLocalStorage.reactLocalStorage.setObject('jwt',{jwt:result.data.jwt});
+                    ReactLocalStorage.reactLocalStorage.get('jwt', true);
+
 
                     window.location.href = `../interface/recruteur`
 
