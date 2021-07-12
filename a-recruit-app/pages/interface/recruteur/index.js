@@ -10,226 +10,270 @@ import Axios from 'axios'
 import jwt_decode from 'jwt-decode'
 import ReactLocalStorage  from 'reactjs-localstorage'
 
-export default function recruteur({data}) {
 
-    const diplomes = ['CAP', 'BEP', 'BAC', 'BTS/DUT', 'Licence', 'Master1', 'Master2', 'Doctorat'];
-    const niveauEtudes = ['BAC', 'BAC+1', 'BAC+2', 'BAC+3', 'BAC+4', 'BAC+5', 'BAC+6', 'BAC+7', 'BAC+8'];
-    const experience = ['débutant', '1 an à 2 ans', '2 ans à 3 ans', '3 ans à 4 ans', '4 ans à 5 ans' , '5 ans et plus (Senior)'];
-    
-    const [europe_country,setEuropeCountry] = useState([]);
-    const [departments,setDepartments]= useState([]);
-    const [company_info,setCompanyInfo] = useState([]);
-    const [company_fillededJobs,setCompanyFilledeJobs] = useState([]);
-    const [company_unFilledJobs,setCompanyUnfillededJobs] = useState([]);
-
-    //chargement des données de l'interface
-
-    useEffect(() => {
-
-        const  localdata= ReactLocalStorage.reactLocalStorage.getObject('jwt')
-        const  loded_user = jwt_decode(JSON.stringify(localdata)) 
-       
-        ///Chargement des données régionnaux pour les formulaires
-
-        Axios.get("https://restcountries.eu/rest/v2/region/europe?fields=name", {europe : europe_country})
-        .then( (reponse)=>{ setEuropeCountry(reponse.data)} )
+export default function recuteur({data}){
 
 
-        //console.log(loded_user.user_id)
-        ///Chargement des donnéés concernant l'utilisateur
+    /* DONNÉES PRINCIPALES */
 
-         Axios.post("http://localhost:3080/getCompanyInfo",
-        {
-            user_id:loded_user.user_id
+        const [europe_country,setEuropeCountry] = useState([]);
+        const [departments,setDepartments]= useState([]);
+        const [company_info,setCompanyInfo] = useState([]);
+        const [company_fillededJobs,setCompanyFilledeJobs] = useState([]);
+        const [company_unFilledJobs,setCompanyUnfillededJobs] = useState([]);
 
-        }). then( (reponse)=>{
+        const [consultants,setConsultant] = useState([])
 
-            setCompanyInfo(reponse.data)
 
-            if(reponse.data.company_id){
-    
+        useEffect(() => {
+
+            const  localdata= ReactLocalStorage.reactLocalStorage.getObject('jwt')
+            const  loded_user = jwt_decode(JSON.stringify(localdata)) 
+        
+            ///Chargement des données régionnaux pour les formulaires
+
+            Axios.get("https://restcountries.eu/rest/v2/region/europe?fields=name", {europe : europe_country})
+            .then( (reponse)=>{ setEuropeCountry(reponse.data)} )
+
+
+            //console.log(loded_user.user_id)
+            ///Chargement des donnéés concernant l'utilisateur
+
+            Axios.post("http://localhost:3080/getCompanyInfo",
+            {
+                user_id:loded_user.user_id
+
+            }). then( (reponse)=>{
+
+                setCompanyInfo(reponse.data)
+
+                if(reponse.data.company_id){
+        
                     Axios.post("http://localhost:3080/getUnFillededJobLimit4",{company_id:reponse.data.company_id }).
-                then( (reponse)=>{setCompanyUnfillededJobs(reponse.data)})
+                    then( (reponse)=>{setCompanyUnfillededJobs(reponse.data)})
                     Axios.post("http://localhost:3080/getFillededJobLimit4",{company_id:reponse.data.company_id}).
-                then( (reponse)=>{setCompanyFilledeJobs(reponse.data)})
-            }
-        
-        })
-
-      
-       
-
-    }, [])
-
-    useEffect(() => {
-
-        if(company_info.company_country==="France"){
-            Axios.get("https://geo.api.gouv.fr/departements")
-            .then( (reponse)=>{setDepartments(reponse.data);console.log(reponse.data)});
-        }
-        
-    }, [company_info])
-   
-    
-    //Chargement des départements  et des villes :
-
-    let cities =[];
-    const  loadDepartment =  (coutry) =>  {
-        if(coutry==="France" ){
-            Axios.get("https://geo.api.gouv.fr/departements")
-            .then( (reponse)=>{setDepartments(reponse.data)});
-        }
-    }
-
-    const loadCity = (code) => {
-
-       Axios.get(`https://geo.api.gouv.fr/departements/${code}/communes`)
-       .then((reponse)=>{villes = reponse.data})
-       console.log({"villes" : villes})
-    }
-    
-
-    //VARIABLE POUR LES FORMULAIRES
-
-    //Formulair 1 ( TERMINER L'INSCRIPTION)
-    const company_id=company_info.company_id;
-    const [company_name,setCompanyName]=useState(company_info.company_name);
-    const [company_nationality, setCompanyNationality]=useState(company_info.company_nationality);
-    const [company_representative_status, setCompanyRepresentativeStatus]=useState(company_info.company_representative_status);
-    const [company_rcs, setCompanyRcs]=useState(company_info.company_rcs);
-    const [company_headquarters, setCompanyHeadquarters]=useState(company_info.company_headquarters);
-    const [company_zip_code, setCompanyZipCode]=useState(company_info.company_zip_code);
-    const [company_address, setCompanyAddress]=useState(company_info.company_address);
-    const [company_department, setCompanyDepartment]=useState(company_info.company_department);
-    const [company_phone_number, setCompanyPhoneNumber]=useState(company_info.company_phone_number);
-    const [company_city, setCompanyCity]=useState(company_info.company_city);
-    const [company_country, setCompanyCountry]=useState(company_info.company_country);
-    const [is_partner, setIsPartner]=useState(company_info.is_partner);
-    const [partner_type, setPartnerType]=useState(company_info.partner_type);
-    const [consultant_id, setConsultantId]=useState(company_info.consultant_id);
-
-    //console.log(company_info)
-    //Formulaire 2 ( Demande d'offre d'emploie )
-    const [job_title, setJobTitle]=useState(false);
-    const [job_country, setJobCountry]=useState('RPC');
-    const [job_department, setJobDepartment]=useState('Yunan');
-    const [job_required_grad, setJobRequiredGrade]=useState('Master');
-    const [job_required_experience, setJobRequiredExperience]=useState('25');
-    const [job_required_level, setJobRequiredLevel]=useState('24');
-    const [job_presentation_pdf, setJobPresentationPDF]=useState(false);
-    const [job_presentation_video, setJobPresentationVideo]=useState('video');
-    const [job_city, setJobCity]=useState("Shanghai");
-    const [job_zip_code, setJobZipCode]=useState("55452");
-    const [job_origin, setJobOrigin]=useState("test");
-    const [job_statut, setJobStatut]=useState("available");
-    const [job_contract_type, setJobContractType]=useState("CDI");
-
-
-    //Verifier si les infos sur l'entreprise sont tous données
-
-    var register_todo = "A TERMINER";
-
-    if(company_name=== "false" || company_nationality=== "false" || company_phone_number=== "false" || company_headquarters=== "false" || company_address=== "false" || company_department=== "false" || company_city
-       === "false" || company_rcs=== "false" || company_zip_code=== "false" || company_country=== "false" || company_representative_status==="false" || !company_name|| !company_nationality|| !company_phone_number|| !company_headquarters|| !company_address|| !company_department|| !company_city
-       || !company_rcs|| !company_zip_code|| !company_country|!company_representative_status ){
-
-            register_todo = "A TERMINER";
-
-    }else{
-        register_todo = "TERMINÉ";
-    }
-
-
-    let reloade=true;
-    
-    //Ancre ( pour ouvir et fermer les formulaires déroulant)
-    const [show_hide1, setShow_hide1] =useState("");
-    const [show_hide2, setShow_hide2] =useState(false);
-
-    //( pour recharger la page après la validation des formulaires)
-    useEffect(()=>{
-
-    },reloade)
-
-    
-    //Formumaire pour modifier ou finaliser les données sur l'entreprise
-    const finalization = (e)=>{
-        
-       if(true){
-
-           Axios.post('http://localhost:3080/updateCompanyInfo',{
-                company_id:company_id,
-                company_name:company_name,
-                company_nationality:company_nationality,
-                company_representative_status:company_representative_status,
-                company_rcs:company_rcs,
-                company_address:company_address,
-                company_department:company_department,
-                company_phone_number:company_phone_number,
-                company_headquarters:company_headquarters,
-                company_zip_code:company_zip_code,
-                company_city:company_city,
-                company_country:company_country,
-                is_partner:is_partner,
-                partner_type:partner_type,
-                consultant_id:consultant_id
-
-            }).then((resutlt)=>{
-                
-                if(!resutlt.err){
-                    
-                   
-                }else {
-                     setAlert("Une erreur s'est produite")
+                    then( (reponse)=>{setCompanyFilledeJobs(reponse.data)})
+                    Axios.post("http://localhost:3080/getConsultantByDepartment",{company_department:reponse.data.company_department}).
+                    then( (reponse)=>{setConsultant(reponse.data)})
                 }
-            });
-        }
-        setShow_hide1(false)
-        reloade = !reloade;
-
-    }
-
-    //Formulaire pour créer une nouvelle offre d'emploi
-    const newJobPosting = (e)=>{
-
-        if(!job_title || !job_contract_type || !job_country || !job_department || !job_required_grad || !job_required_level || !job_required_experience
-            || !job_presentation_pdf || !job_presentation_video || !job_city || !job_zip_code  || !job_origin
-            || !job_statut){
-
-                alert('Veuillez remplire tout les champs')
             
-        }else{
+            })
 
-           Axios.post('http://localhost:3080/createJob',{
-                
-                job_title:job_title,
-                job_contract_type:job_contract_type,
-                job_country:job_country,
-                job_department:job_department,
-                job_required_grad:job_required_grad,
-                job_required_level:job_required_level,
-                job_required_experience:job_required_experience,
-                job_presentation_pdf:job_presentation_pdf,
-                job_presentation_video:job_presentation_video,
-                job_city:job_city,
-                job_zip_code:job_zip_code,
-                job_creator_id:company_id,
-                job_origin:job_origin,
-                job_statut:job_statut
+        }, [])
 
-            }).then((resutlt)=>{
-                
-                if(!resutlt.err){
-                    window.location.href = `../interface/recruteur`
-                }else {
-                     alert("Merci de remplir tous les champs")
-                }
-            });
-            console.log(newJobPosting);
+        //Recupérer le calendly du consultant de l'entreprise
+
+        const [url,setUrl]=useState("")
+
+        useEffect(() => {
+            Axios.post("http://localhost:3080/getConsultantCalendly",{consultant_id:company_info.consultant_id}).
+            then( (reponse)=>{setUrl(`https://calendly.com/${reponse.data.user_calendly}/30min`)})
+            
+        }, [company_info.consultant_id])
+
+
+        const loadConsultant = (department)=>{
+            Axios.post("http://localhost:3080/getConsultantByDepartment",{company_department:department}).
+            then( (reponse)=>{setConsultant(reponse.data)})
         }
-    }
+
+        //Chargement des départements  et des villes :
+
+        let cities =[];
+
+        const  loadDepartment =  (coutry) =>  {
+            if(coutry==="France" ){
+                Axios.get("https://geo.api.gouv.fr/departements")
+                .then( (reponse)=>{setDepartments(reponse.data)});
+            }
+        }
+
+        const loadCity = (code) => {
+
+        Axios.get(`https://geo.api.gouv.fr/departements/${code}/communes`)
+        .then((reponse)=>{villes = reponse.data})
+        console.log({"villes" : villes})
+        }
+
+        
+    /* FIN */
+
+        
+
+    /* DEBUT : FORMULAIRES */
+
+        const diplomes = ['CAP', 'BEP', 'BAC', 'BTS/DUT', 'Licence', 'Master1', 'Master2', 'Doctorat'];
+        const niveauEtudes = ['BAC', 'BAC+1', 'BAC+2', 'BAC+3', 'BAC+4', 'BAC+5', 'BAC+6', 'BAC+7', 'BAC+8'];
+        const experience = ['débutant', '1 an à 2 ans', '2 ans à 3 ans', '3 ans à 4 ans', '4 ans à 5 ans' , '5 ans et plus (Senior)'];
+        let reloade=true;
+        useEffect(()=>{},reloade)
+
+    /* FIN */
+
+    /* DEBUT : Formulair 1 ( TERMINER L'INSCRIPTION) */
+
+        //DECLARATION
+        let company_id=company_info.company_id;
+        const [company_name,setCompanyName]=useState(company_info.company_name);
+        const [company_nationality, setCompanyNationality]=useState(company_info.company_nationality);
+        const [company_representative_status, setCompanyRepresentativeStatus]=useState(company_info.company_representative_status);
+        const [company_rcs, setCompanyRcs]=useState(company_info.company_rcs);
+        const [company_headquarters, setCompanyHeadquarters]=useState(company_info.company_headquarters);
+        const [company_zip_code, setCompanyZipCode]=useState(company_info.company_zip_code);
+        const [company_address, setCompanyAddress]=useState(company_info.company_address);
+        const [company_department, setCompanyDepartment]=useState(company_info.company_department);
+        const [company_phone_number, setCompanyPhoneNumber]=useState(company_info.company_phone_number);
+        const [company_city, setCompanyCity]=useState(company_info.company_city);
+        const [company_country, setCompanyCountry]=useState(company_info.company_country);
+        const [is_partner, setIsPartner]=useState(company_info.is_partner);
+        const [partner_type, setPartnerType]=useState(company_info.partner_type);
+        const [consultant_id, setConsultantId]=useState(company_info.consultant_id);
+
+        //MISE A JOUR AU CHARGEMENT DE LA PAGE
+        useEffect(() => {
+
+            if(company_info.company_country==="France"){
+                Axios.get("https://geo.api.gouv.fr/departements")
+                .then( (reponse)=>{setDepartments(reponse.data);});
+            }
+
+            company_id=company_info.company_id;
+            setCompanyName(company_info.company_name);
+            setCompanyNationality(company_info.company_nationality);
+            setCompanyRepresentativeStatus(company_info.company_representative_status);
+            setCompanyRcs(company_info.company_rcs);
+            setCompanyHeadquarters(company_info.company_headquarters);
+            setCompanyZipCode(company_info.company_zip_code);
+            setCompanyAddress(company_info.company_address);
+            setCompanyDepartment(company_info.company_department);
+            setCompanyPhoneNumber(company_info.company_phone_number);
+            setCompanyCity(company_info.company_city);
+            setCompanyCountry(company_info.company_country);
+            setIsPartner(company_info.is_partner);
+            setPartnerType(company_info.partner_type);
+            setConsultantId(company_info.consultant_id);
+            
+        }, [company_info])
+
+        //FONCTION DE MISE A JOUR DES INFOS SUR L'ENTREPRISE
+        const finalization = (e)=>{
+        
+            if(true){
+     
+                Axios.post('http://localhost:3080/updateCompanyInfo',{
+                     company_id:company_id,
+                     company_name:company_name,
+                     company_nationality:company_nationality,
+                     company_representative_status:company_representative_status,
+                     company_rcs:company_rcs,
+                     company_address:company_address,
+                     company_department:company_department,
+                     company_phone_number:company_phone_number,
+                     company_headquarters:company_headquarters,
+                     company_zip_code:company_zip_code,
+                     company_city:company_city,
+                     company_country:company_country,
+                     is_partner:is_partner,
+                     partner_type:partner_type,
+                     consultant_id:consultant_id
+     
+                 }).then((resutlt)=>{
+                     
+                     if(!resutlt.err){
+                         
+                        
+                     }else {
+                          setAlert("Une erreur s'est produite")
+                     }
+                 });
+             }
+             setShow_hide1(false)
+             reloade = !reloade;
+     
+        }
+         
+        //Verifier si les infos sur l'entreprise sont tous données
+
+        var register_todo = "A TERMINER";
+
+        if(company_name=== "false" || company_nationality=== "false" || company_phone_number=== "false" || company_headquarters=== "false" || company_address=== "false" || company_department=== "false" || company_city
+        === "false" || company_rcs=== "false" || company_zip_code=== "false" || company_country=== "false" || company_representative_status==="false" || !company_name|| !company_nationality|| !company_phone_number|| !company_headquarters|| !company_address|| !company_department|| !company_city
+        || !company_rcs|| !company_zip_code|| !company_country|!company_representative_status ){
+
+                register_todo = "A TERMINER";
+
+        }else{
+            register_todo = "TERMINÉ";
+        }
+
+    /* FIN */
+               
+
+    /*DEBUT : FORMULAIRE 2 AJOUT D'UNE  DEMANDE D'OFFRE D'EMPLOIE */
+
+        const [job_title, setJobTitle]=useState(false);
+        const [job_country, setJobCountry]=useState('RPC');
+        const [job_department, setJobDepartment]=useState('Yunan');
+        const [job_required_grad, setJobRequiredGrade]=useState('Master');
+        const [job_required_experience, setJobRequiredExperience]=useState('25');
+        const [job_required_level, setJobRequiredLevel]=useState('24');
+        const [job_presentation_pdf, setJobPresentationPDF]=useState(false);
+        const [job_presentation_video, setJobPresentationVideo]=useState('video');
+        const [job_city, setJobCity]=useState("Shanghai");
+        const [job_zip_code, setJobZipCode]=useState("55452");
+        const [job_origin, setJobOrigin]=useState("test");
+        const [job_statut, setJobStatut]=useState("available");
+        const [job_contract_type, setJobContractType]=useState("CDI");
+
+        const newJobPosting = (e)=>{
+
+            if(!job_title || !job_contract_type || !job_country || !job_department || !job_required_grad || !job_required_level || !job_required_experience
+                || !job_presentation_pdf || !job_presentation_video || !job_city || !job_zip_code  || !job_origin
+                || !job_statut){
+
+                    alert('Veuillez remplire tout les champs')
+                
+            }else{
+
+            Axios.post('http://localhost:3080/createJob',{
+                    
+                    job_title:job_title,
+                    job_contract_type:job_contract_type,
+                    job_country:job_country,
+                    job_department:job_department,
+                    job_required_grad:job_required_grad,
+                    job_required_level:job_required_level,
+                    job_required_experience:job_required_experience,
+                    job_presentation_pdf:job_presentation_pdf,
+                    job_presentation_video:job_presentation_video,
+                    job_city:job_city,
+                    job_zip_code:job_zip_code,
+                    job_creator_id:company_id,
+                    job_origin:job_origin,
+                    job_statut:job_statut
+
+                }).then((resutlt)=>{
+                    
+                    if(!resutlt.err){
+                        window.location.href = `../interface/recruteur`
+                    }else {
+                        alert("Merci de remplir tous les champs")
+                    }
+                });
+            }
+        }
+
+    /* FIN */
 
 
+
+    /* MENUS DEROULANTS  */
+        
+        //Ancre ( pour ouvir et fermer les formulaires déroulant)
+        const [show_hide1, setShow_hide1] =useState("");
+        const [show_hide2, setShow_hide2] =useState(false);
+
+    /* FIN MENU DEROULANT */    
 
 
     return (
@@ -277,7 +321,7 @@ export default function recruteur({data}) {
                              <div className="w100 orientationH spaceBetween center">
                                 <label>Département :</label>
                                 {(departments.length!==0 || company_info.company_department)? 
-                                    <select className="form_select" required onChange={(e)=>{setCompanyDepartment(e.target.value)}}>
+                                    <select className="form_select" required onChange={(e)=>{setCompanyDepartment(e.target.value);loadConsultant(e.target.value)}}>
                                         <option>Selectionnez un departement</option>
 
                                         {departments.map((element, index) => {
@@ -338,6 +382,25 @@ export default function recruteur({data}) {
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
                                 <label>Tel :</label><input placeholder={company_info.company_phone_number ? company_info.company_phone_number : "..."} type="text" name="ent_name"  onChange={(e)=>{setCompanyPhoneNumber(e.target.value)}}/>
+                            </div>
+                            
+                        </div>
+                        <div className="register_todo w100 orientationH spaceBetween center">
+                             <div className="w100 orientationH spaceBetween center">
+                                <label>Consultant :</label>
+                                <select className="form_select" required onChange={(e)=>{setConsultantId(e.target.value)}}>
+                                    <option>Choisir mon consultant</option>
+
+                                    {consultants.map((element, index) => {
+                                            if(company_info.consultant_id && element.user_id===company_info.consultant_id){
+                                                return <option className="option-selected" value={element.user_id} selected key={index}>{element.user_name}</option>
+                                            }else{
+                                                return <option key={index} value={element.user_id}>{element.user_name}</option>
+                                            }
+                                    })}
+                                        
+                                </select>
+
                             </div>
                             
                         </div>
@@ -447,7 +510,7 @@ export default function recruteur({data}) {
                                 <div className="register_todo w100 orientationH spaceBetween center">
                                      <div className="w100 orientationH spaceBetween center">
                                         <label>Pays :</label>
-                                        <select className="form_select" required onChange={(e)=>{setJobCountry(e.target.value)}}>
+                                        <select className="form_select" required onChange={(e)=>{setJobCountry(e.target.value);loadDepartment(e.target.value)}}>
                                             <option>--Pays--</option>
                                             {europe_country.map((element, index) => {
                                                 return <option key={index} value={element.name}>{element.name}</option>
@@ -537,11 +600,13 @@ export default function recruteur({data}) {
                             </div>
 
                             {/* CALENDRIER */}
-                            <div className="calendrier orientationV">
+                            <div className="calendrier orientationV w100">
                                 <br></br>
                                 <div>Merci de choisir un créneau de RDV afin de finaliser votre demande</div>
 
-                                <Agenda/>
+                                <Agenda
+                                    url={url}
+                                />
                             </div>
 
                         </div>
@@ -564,6 +629,8 @@ export default function recruteur({data}) {
         </div>
     )
 }
+
+
 
 // export async function getStaticProps() {
 

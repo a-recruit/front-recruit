@@ -23,6 +23,9 @@ exports.test = (req,res)=>{
 
 }
 
+
+
+
 exports.signup = (req,res)=>{
 
   bcrypt.hash(req.body.user_password,12,function(err,hash){

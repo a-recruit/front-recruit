@@ -44,6 +44,11 @@ a {
   align-items: center;
   text-align: center;
 }
+
+.center-H{
+  display: flex;
+  justify-content: space-between;
+}
 .color-p{
   color: var(--color-primary-light);
 }

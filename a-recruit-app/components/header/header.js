@@ -16,6 +16,10 @@ export default function header() {
         setUser(decoded)
     }, [])
 
+    const disconnect  = () =>{
+        ReactLocalStorage.reactLocalStorage.remove('jwt')
+    }
+
    // console.log(user)
 
 
@@ -34,10 +38,20 @@ export default function header() {
                         <img className="icon" src="/images/icon_notification.png" alt='noti_icon'/>
                         <span>{nb_notif}</span>
                     </div>
-                    <div className="user_icon_z">
-                        <img className="icon" src="/images/icon_def_usr.png" alt='noti_icon'/>
+                    <div className="user">
+                        <ul>
+
+                            <li><a><img className="icon" src="/images/icon_def_usr.png" alt='noti_icon'/>{" "+user.user_name + " " + user.user_firstname}</a>
+                                <ul>
+                                    <li className="center-H"><img className="icon" src="/images/icon_def_usr.png" alt='noti_icon'/>{" "} Mon profile</li>
+                                    <li onClick={()=>{disconnect()}}>Se deconnecter</li>
+                                </ul>
+                            
+                            </li>
+                        </ul>
+                        
                     </div>
-                    <div className="user_name_z">{""+user.user_name + " " + user.user_firstname}</div>
+                    <div className="user_name_z"></div>
                 </div>
                 
             </div>
@@ -76,6 +90,57 @@ export default function header() {
                     padding-right:1em;
                     padding-left: 0.5em;
                 }
+                .user{
+                    display: inline-block;
+                }
+                .user ul {
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+                }
+                .user ul li {
+                    display: block;
+                    position: relative;
+                    float: left;
+                }
+                .user ul li a{
+                    color :  #fff;
+                    text-decoration: none;
+                    cursor : pointer;
+                }
+                .user li ul {
+                    display: none;
+                    min-width: 150px;
+                    background-color: var(--color-primary-light);
+                    z-index: 10;
+                    
+                }
+
+                .user li ul li{ 
+                    min-height: 30px;
+                    border-top:1px solid #fff;
+                    padding : 2px;
+                    cursor: pointer;
+                }
+
+                .user li ul li :nth-child(1){
+                    margin-top:0.7em;
+                }
+
+                .user li:hover ul {
+                    /* Ici l’affichage du sous-user */
+                    display: block;
+                    position: absolute;
+                }
+                .user li:hover li {
+                     float: none;
+                }
+                .user ul li ul li:hover a {
+                    background: #999;
+                } 
+                .user li:hover li a:hover {
+                    background: #555;
+                }​
 
             `}</style>
         </>
