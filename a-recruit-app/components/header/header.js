@@ -4,7 +4,8 @@ import ReactLocalStorage from 'reactjs-localstorage'
 import jwt_decode from 'jwt-decode'
 
 
-export default function header() {
+
+export default function header(props) {
 
     const [user,setUser]=useState("");
 
@@ -18,6 +19,9 @@ export default function header() {
 
     const disconnect  = () =>{
         ReactLocalStorage.reactLocalStorage.remove('jwt')
+
+        window.location.href =`/`;
+
     }
 
    // console.log(user)
@@ -25,6 +29,7 @@ export default function header() {
 
     const nb_notif = 5;
 
+    
     return (
         <>
             <div className="header orientationH spaceBetween">
@@ -34,16 +39,18 @@ export default function header() {
                     </a>
                 </Link>
                 <div className="orientationH ">
-                    <div className="notification_z">
+                    <div className="notification_z" onClick={()=>{props.callback()}}>
                         <img className="icon" src="/images/icon_notification.png" alt='noti_icon'/>
                         <span>{nb_notif}</span>
                     </div>
-                    <div className="user">
+                    <div className="user orientationV">
+                        <div className="user_name_z"></div>
+
                         <ul>
 
                             <li><a><img className="icon" src="/images/icon_def_usr.png" alt='noti_icon'/>{" "+user.user_name + " " + user.user_firstname}</a>
                                 <ul>
-                                    <li className="center-H"><img className="icon" src="/images/icon_def_usr.png" alt='noti_icon'/>{" "} Mon profile</li>
+                                    <li className="center-H" >Mon profile</li>
                                     <li onClick={()=>{disconnect()}}>Se deconnecter</li>
                                 </ul>
                             
@@ -51,9 +58,8 @@ export default function header() {
                         </ul>
                         
                     </div>
-                    <div className="user_name_z"></div>
                 </div>
-                
+               
             </div>
             <style jsx>{`
 
@@ -70,6 +76,7 @@ export default function header() {
                 }
                 .notification_z{
                     padding-right:0.7em;
+                    cursor:pointer;
                 }
                 .notification_z span{
                     position: relative;
@@ -91,7 +98,8 @@ export default function header() {
                     padding-left: 0.5em;
                 }
                 .user{
-                    display: inline-block;
+                    display: flex;
+                    padding-right: 0.5em;
                 }
                 .user ul {
                     margin: 0;
@@ -99,9 +107,6 @@ export default function header() {
                     list-style: none;
                 }
                 .user ul li {
-                    display: block;
-                    position: relative;
-                    float: left;
                 }
                 .user ul li a{
                     color :  #fff;
@@ -110,7 +115,6 @@ export default function header() {
                 }
                 .user li ul {
                     display: none;
-                    min-width: 150px;
                     background-color: var(--color-primary-light);
                     z-index: 10;
                     
@@ -135,7 +139,14 @@ export default function header() {
                 .user li:hover li {
                      float: none;
                 }
-                .user ul li ul li:hover a {
+                .user ul li ul li{
+                    padding-left: 1em;
+                    padding-right: 1em;
+                    padding-top: 0.5em;
+                    padding-bottom: 0.5em;
+
+                }
+                .user ul li ul li:hover{
                     background: #999;
                 } 
                 .user li:hover li a:hover {

@@ -3,7 +3,7 @@ import Axios from 'axios'
 import Head from 'next/head';
 import Link from 'next/link';
 import ReactLocalStorage from 'reactjs-localstorage'
-
+import jwtDecode from 'jwt-decode';
 
 
 export default function Connect({dest}) {
@@ -34,7 +34,8 @@ export default function Connect({dest}) {
                     //console.log(resutlt.data)
                     ReactLocalStorage.reactLocalStorage.setObject('jwt',{jwt:resutlt.data});
                     ReactLocalStorage.reactLocalStorage.get('jwt', true);
-
+                    //let user = jwtDecode(JSON.stringify(resutlt.data));
+                    //console.log(user)
                     window.location.href =`../interface/recruteur`;
                 }else {
                     setAlert("Identifiants et / ou  mot de passe incorrects")

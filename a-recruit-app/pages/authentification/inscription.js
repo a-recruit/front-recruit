@@ -14,6 +14,7 @@ export default function inscription({dest}) {
     
     const router=useRouter();//donne la personne qui veut s'inscrire 
 
+
     const [user_name,setUserName]=useState(false);
     const [user_firstname,setUserFirstName]=useState(false);
     const [user_email,setUserEmail]=useState(false);
