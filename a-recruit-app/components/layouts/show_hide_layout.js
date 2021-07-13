@@ -37,10 +37,9 @@ export default function show_hide_layout(props) {
                 {/* ENTËTE DE LA ZONE DEROULANTE */}
                 <div className="head w100 orientationH spaceBetween center" onClick={()=>show_or_hide()}>
                     <div className="demandes_head text center">{props.title}</div>
-                        <div className="direction_arrow_z orientationH fromRight center">
-                            {props.statut && <div className={"button sh_button"+(props.statut ==="A TERMINER" ? " unfinished " : " finished ") + (!show_todo? " " : " bottom5")}>{props.statut}</div>}
-                            <div><p><i className={"direction_arrow" + (!show_todo? " down" : " up")}></i></p>
-                        </div>                          
+                    <div className="direction_arrow_z orientationH fromRight center">
+                        {props.statut && <div className={"button sh_button"+(props.statut ==="A TERMINER" ? " unfinished " : " finished ") + (!show_todo? " " : " bottom5")}>{props.statut}</div>}
+                        <div><p><i className={"direction_arrow" + (!show_todo? " down" : " up")}></i></p></div>                          
                     </div>
                 </div>
 

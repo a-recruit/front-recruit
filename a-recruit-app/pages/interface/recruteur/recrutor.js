@@ -185,15 +185,14 @@ export default function recrutor(){
                  }).then((resutlt)=>{
                      
                      if(!resutlt.err){
-                         
+                        reloade = !reloade;
                         
                      }else {
-                          setAlert("Une erreur s'est produite")
+                          Alert("Une erreur s'est produite veuillez revérier tout les champs et réessayez")
                      }
                  });
              }
              setShow_hide1(false)
-             reloade = !reloade;
      
         }
          
@@ -293,7 +292,7 @@ export default function recrutor(){
             </Head>
             {/*---------------*/}
             <Header
-                callback = {()=>{setShow_hide3(!show_hide3);console.log('callback')}}
+                callback = {()=>{setShow_hide3(!show_hide3);}}
             />
             {/*---------------*/}
             

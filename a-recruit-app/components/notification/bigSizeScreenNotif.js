@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import Notification from './notification'
 
 export default function bigSizeScreenNotif(props) {
     
@@ -7,9 +8,16 @@ export default function bigSizeScreenNotif(props) {
             {props.showHide &&
             
                 <div className="bigSizeNotif">
-                    <div className="orientationH spaceBetween">
-                        <div>Notification</div>
-                        <div className="close" onClick={()=>{props.callback()}}>X</div>
+                    <div>
+                        <Notification
+                            text=" Soyez les bienvenue !!! A-RECRUIT vous souhaite la bienvenue dans son vaste réseau . Nous nous engageons à faire de votre satisfaction notre pierre angulaire. "
+                            date="Hier à 21:47"
+                        />
+                        <Notification
+                            text=" Soyez les bienvenue !!! A-RECRUIT vous souhaite la bienvenue dans son vaste réseau . Nous nous engageons à faire de votre satisfaction notre pierre angulaire."
+                            date="Hier à 21:47"
+                        />
+                        <div className="center font-small">© A-RECRUIT</div>
                     </div>
                     
                 </div>
@@ -17,17 +25,22 @@ export default function bigSizeScreenNotif(props) {
             <style jsx>
                 {`
                     .bigSizeNotif{
-                        width: 50vw;
-                        max-width: 500px;
-                        height:100vh;
+
+                        color: #3c4257;
+                        width: 70vw;
+                        max-width: 400px;
                         background-color: #fff;
+                        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                        border-radius: 3px;
                         position:absolute;
-                        top : 40px;
-                        right: 0px;
+                        right: 10px;
+                        top: 30px;
+                     
+                    }
+
+                    .notif_head{
                         padding: 2em;
-                        animation-duration: 1s;
-                        animation-name: slidein;
-                        border-left: 1px solid var(--color-primary-light)
+                        padding-bottom: 0em;
                     }
 
                     .close{
@@ -35,14 +48,32 @@ export default function bigSizeScreenNotif(props) {
                     }
 
                     @keyframes slidein {
+                        
                         from {
-                          width: 0%;
+                          height: 10%;
                         }
                       
                         to {
-                          width: 50vw;
+                          height: 50vw;
                         }
-                      }
+                    }
+
+                    @media screen and (max-width:500px){
+
+                        .bigSizeNotif{
+                            width: 100vw;
+                        }
+
+                        @keyframes slidein {
+                            from {
+                              width: 0%;
+                            }
+                          
+                            to {
+                              width: 100vw;
+                            }
+                        }
+                    }
 
                   
                 `}

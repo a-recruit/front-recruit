@@ -39,10 +39,13 @@ export default function header(props) {
                     </a>
                 </Link>
                 <div className="orientationH ">
+
                     <div className="notification_z" onClick={()=>{props.callback()}}>
                         <img className="icon" src="/images/icon_notification.png" alt='noti_icon'/>
                         <span>{nb_notif}</span>
+                        
                     </div>
+
                     <div className="user orientationV">
                         <div className="user_name_z"></div>
 
