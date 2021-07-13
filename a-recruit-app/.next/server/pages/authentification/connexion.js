@@ -109,6 +109,16 @@ module.exports = require("react/jsx-dev-runtime");;
 "use strict";
 module.exports = require("reactjs-localstorage");;
 
+/***/ }),
+
+/***/ "?ca47":
+/*!******************************************!*\
+  !*** ./utils/resolve-rewrites (ignored) ***!
+  \******************************************/
+/***/ (function() {
+
+/* (ignored) */
+
 /***/ })
 
 };

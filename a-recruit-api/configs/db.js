@@ -34,4 +34,6 @@ pool.query("SET LC_TIME = 'French';",
   console.log("Données configurées en Français.");
 });
 
+
+
 module.exports = pool;

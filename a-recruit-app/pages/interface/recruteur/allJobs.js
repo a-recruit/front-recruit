@@ -4,7 +4,9 @@ import Head from 'next/head'
 import Header from '../../../components/header/header'
 
 
-export default function allJobs(dest) {
+export default function allJobs(info) {
+    
+   // console.log(info.query)
 
     const [unfilledJobs,setUnfilledJobs] =useState([]);
 
@@ -12,13 +14,13 @@ export default function allJobs(dest) {
 
     useEffect(()=>{
 
-        if(dest.dest==="unfilled"){
+        if(info.query.dest==="unfilled"){
 
             setFilledJobs([])
 
             Axios.post('http://localhost:3080/getUnFillededJob',{
 
-                company_id:2,
+                company_id:info.query.company_id,
 
             }).then(resutlt=>{
 
@@ -40,7 +42,7 @@ export default function allJobs(dest) {
 
             Axios.post('http://localhost:3080/getFillededJob',{
 
-                company_id:2,
+                company_id:info.query.company_id,
 
             }).then(resutlt=>{
 
@@ -105,8 +107,10 @@ export default function allJobs(dest) {
 }
 
 export const getServerSideProps = async ({query}) => {
-    const dest = query.dest;
+   
     return {
-       props: { dest }
+       props: { 
+            query,
+        }
     }
 }

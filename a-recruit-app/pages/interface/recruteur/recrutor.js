@@ -162,6 +162,8 @@ export default function recrutor(){
 
         //FONCTION DE MISE A JOUR DES INFOS SUR L'ENTREPRISE
         const finalization = (e)=>{
+
+            e.preventDefault();
         
             if(true){
      
@@ -230,6 +232,8 @@ export default function recrutor(){
         const [job_contract_type, setJobContractType]=useState("CDI");
 
         const newJobPosting = (e)=>{
+
+            e.preventDefault();
 
             if(!job_title || !job_contract_type || !job_country || !job_department || !job_required_grad || !job_required_level || !job_required_experience
                 || !job_presentation_pdf || !job_presentation_video || !job_city || !job_zip_code  || !job_origin
@@ -456,7 +460,7 @@ export default function recrutor(){
                         );
                     })
                     : <div>AUCUNE DEMANDE EN COURS</div>}
-                    {company_unFilledJobs.length === 4 && <Link  href={{pathname:"/interface/recruteur/allJobs",query:{dest:"unfilled"}}}>
+                    {company_unFilledJobs.length === 4 && <Link  href={{pathname:"/interface/recruteur/allJobs",query:{dest:"unfilled",company_id:company_info.company_id}}}>
                         <a>
                             <div className="show_more">voir plus {">>"}</div>
                         </a>
@@ -490,7 +494,7 @@ export default function recrutor(){
                             </a>
                         </Link>
                     </div>
-                    {company_fillededJobs.length === 4 && <Link  href={{pathname:"/interface/recruteur/allJobs",query:{dest:"filled"}}}>
+                    {company_fillededJobs.length === 4 && <Link  href={{pathname:"/interface/recruteur/allJobs",query:{dest:"filled",company_id:company_info.company_id}}}>
                         <a>
                             <div className="show_more">voir plus {">>"}</div>
                         </a>
@@ -592,7 +596,7 @@ export default function recrutor(){
                                 
                                 <div className=" files w100 orientationV spaceBetween ">
                                     <label>Présentation du poste en video :</label>
-                                    <input type="file"  name="avatar" accept="video/mp4,video/x-m4v,video/*" required onChange={(e)=>{setJobPresentationVideo(e.target.value)}}/>
+                                    <input type="file"  name="avatar" accept="video/mp4,video/x-m4v,video/*"  onChange={(e)=>{setJobPresentationVideo(e.target.value)}}/>
                                 </div>
 
                                 <div className=" files w100 orientationV spaceBetween ">

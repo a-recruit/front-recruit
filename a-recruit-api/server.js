@@ -8,6 +8,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const fileUpload = require('express-fileupload')
 
 const app = express();
 
@@ -16,6 +17,7 @@ const port = 3080;
 // parse requests of content-type: application/json
 app.use(bodyParser.json());
 app.use(cors());
+app.use(fileUpload())
 // parse requests of content-type: application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 

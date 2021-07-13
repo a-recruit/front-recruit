@@ -2,6 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/authentification/connexion": "pages/authentification/connexion.js",
-  "/interface/recruteur": "pages/interface/recruteur.js"
+  "/interface/recruteur": "pages/interface/recruteur.js",
+  "/interface/recruteur/allJobs": "pages/interface/recruteur/allJobs.js",
+  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js"
 }
