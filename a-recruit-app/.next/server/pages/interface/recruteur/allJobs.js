@@ -131,6 +131,16 @@ module.exports = require("reactjs-localstorage");;
 "use strict";
 module.exports = require("styled-jsx/style");;
 
+/***/ }),
+
+/***/ "?ca47":
+/*!******************************************!*\
+  !*** ./utils/resolve-rewrites (ignored) ***!
+  \******************************************/
+/***/ (function() {
+
+/* (ignored) */
+
 /***/ })
 
 };

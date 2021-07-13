@@ -17,7 +17,8 @@ import BigSizeScreenNotif from '../../../components/notification/bigSizeScreenNo
 
 export default function recrutor(){
 
-    
+    let reloade=true;
+    let loaded= true;
     /* DONNÉES PRINCIPALES */
 
         const [europe_country,setEuropeCountry] = useState([]);
@@ -64,7 +65,7 @@ export default function recrutor(){
             
             })
 
-        }, [])
+        }, [reloade])
 
         //Recupérer le calendly du consultant de l'entreprise
 
@@ -110,8 +111,7 @@ export default function recrutor(){
         const diplomes = ['CAP', 'BEP', 'BAC', 'BTS/DUT', 'Licence', 'Master1', 'Master2', 'Doctorat'];
         const niveauEtudes = ['BAC', 'BAC+1', 'BAC+2', 'BAC+3', 'BAC+4', 'BAC+5', 'BAC+6', 'BAC+7', 'BAC+8'];
         const experience = ['débutant', '1 an à 2 ans', '2 ans à 3 ans', '3 ans à 4 ans', '4 ans à 5 ans' , '5 ans et plus (Senior)'];
-        let reloade=true;
-        useEffect(()=>{},reloade)
+        useEffect(()=>{},[reloade])
 
     /* FIN */
 
@@ -591,7 +591,7 @@ export default function recrutor(){
 
                                 <div className=" files w100 orientationV spaceBetween ">
                                     <label>Présentation du poste en pdf:</label>
-                                    <input type="file"  name="avatar" accept="application/pdf,application/vnd.ms-excel" required onChange={(e)=>{setJobPresentationPDF(e.target.value)}}/>
+                                    <input type="file"  name="avatar" accept="application/pdf,application/vnd.ms-excel" required onChange={(e)=>{setJobPresentationPDF(e.target.value);console.log(e.target.value)}}/>
                                 </div>
                                 
                                 <div className=" files w100 orientationV spaceBetween ">

@@ -18,6 +18,7 @@ const port = 3080;
 app.use(bodyParser.json());
 app.use(cors());
 app.use(fileUpload())
+app.use(express.static('public'));
 // parse requests of content-type: application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
