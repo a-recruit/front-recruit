@@ -44,7 +44,7 @@ export default function show_hide_layout(props) {
                 </div>
 
                 {/* FORMULAIRE */}
-                <form>
+                <form encType="multipart/form-data">
 
                     {(show_todo ||  props.show_hide)  && (
                         

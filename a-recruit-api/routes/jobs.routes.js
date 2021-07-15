@@ -1,6 +1,15 @@
 module.exports = app => {
 
     const job = require("../controllers/jobs.controllers.js");
+    
+    const multer = require('multer')
+    const storage = multer.memoryStorage({
+        destination: function (req, file, callback) {
+            callback(null, '')
+        }
+    })
+
+    var upload = multer({ storage}).single('file')
 
     app.post("/getUnFillededJob",job.getUnFillededJob);
 
@@ -10,7 +19,9 @@ module.exports = app => {
 
     app.post("/getFillededJobLimit4",job.getFillededJobLimit4);
 
-    app.post("/createJob",  job.createjob);
+    app.post("/createJob",upload,job.createjob);
+
+
 
   
 };

@@ -6,7 +6,7 @@
 * @since      0.1.0
 */
 const express = require("express");
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser")
 const cors = require("cors");
 const fileUpload = require('express-fileupload')
 
@@ -15,12 +15,19 @@ const app = express();
 const port = 3080;
 
 // parse requests of content-type: application/json
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+  limit: '20mb'
+}));
+
+app.use(bodyParser.urlencoded({
+  limit: '20mb',
+  parameterLimit: 100000,
+  extended: true 
+}));
+
 app.use(cors());
 app.use(fileUpload())
 app.use(express.static('public'));
-// parse requests of content-type: application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
 
 // simple route
 app.get("/", (req, res) => {
@@ -32,6 +39,7 @@ require("./routes/user_info.routes.js")(app);
 require("./routes/jobs.routes.js")(app);
 require("./routes/company.routes.js")(app);
 require("./routes/cv_bank.routes.js")(app);
+//require("./routes/uploade.routes.js")(app);
 
 // set port, listen for requests
 app.listen(port, () => {

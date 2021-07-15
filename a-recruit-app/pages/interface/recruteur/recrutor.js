@@ -9,7 +9,6 @@ import Agenda from '../../../components/others/agenda'
 import Axios from 'axios'
 import jwt_decode from 'jwt-decode'
 import ReactLocalStorage  from 'reactjs-localstorage'
-import {useRouter} from 'next/router'
 import BigSizeScreenNotif from '../../../components/notification/bigSizeScreenNotif'
 
 
@@ -217,21 +216,68 @@ export default function recrutor(){
 
     /*DEBUT : FORMULAIRE 2 AJOUT D'UNE  DEMANDE D'OFFRE D'EMPLOIE */
 
-        const [job_title, setJobTitle]=useState(false);
+        const [job_title, setJobTitle]=useState("JOB");
         const [job_country, setJobCountry]=useState('RPC');
         const [job_department, setJobDepartment]=useState('Yunan');
         const [job_required_grad, setJobRequiredGrade]=useState('Master');
         const [job_required_experience, setJobRequiredExperience]=useState('25');
         const [job_required_level, setJobRequiredLevel]=useState('24');
-        const [job_presentation_pdf, setJobPresentationPDF]=useState(false);
-        const [job_presentation_video, setJobPresentationVideo]=useState('video');
         const [job_city, setJobCity]=useState("Shanghai");
         const [job_zip_code, setJobZipCode]=useState("55452");
         const [job_origin, setJobOrigin]=useState("test");
         const [job_statut, setJobStatut]=useState("available");
         const [job_contract_type, setJobContractType]=useState("CDI");
 
+        const [job_presentation_pdf, setJobPresentationPDF]=useState(null);
+        const [job_presentation_video, setJobPresentationVideo]=useState('video');
+       
+
+        const loaded_file = (e,result)=>{
+
+            const file = e.target.files[0];
+
+            return new Promise((resolve, reject) => {
+
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    let data = e.target.result
+                    resolve({fileName: file.name,buffer:data});
+                };
+
+                reader.onerror = (err) => {
+                    reject(err);
+                };
+
+                reader.readAsDataURL(file);
+                
+            });
+        }
+
+        const job_presentation_pdf_info = (e)=>{
+
+            loaded_file(e).then((result)=>{
+                setJobPresentationPDF({...result,id:company_id})
+                console.log({...result,id:company_id})
+            })
+            
+           /* const selectedFile = e.target.files[0]
+
+            const formData = new FormData();
+
+		    formData.append('File', selectedFile);
+
+            console.log(formData.values())
+
+            setJobPresentationPDF(formData)*/
+
+            
+        }
+        
+
         const newJobPosting = (e)=>{
+
+            console.log(job_presentation_pdf)
 
             e.preventDefault();
 
@@ -318,7 +364,7 @@ export default function recrutor(){
                         <div className="register_todo w100 orientationH spaceBetween center">
                              <div className="w100 orientationH spaceBetween center">
                                 <label>Pays :</label>
-                                <select className="form_select" required onChange={(e)=>{setCompanyCountry(e.target.value);loadDepartment(e.target.value)}}>
+                                <select className="form_select"  onChange={(e)=>{setCompanyCountry(e.target.value);loadDepartment(e.target.value)}}>
                                     {europe_country.map((element, index) => {
                                         if(company_info.company_country && element.name===company_info.company_country){
                                             return <option className="option-selected" selected key={index} value={element.name}>{element.name}</option>
@@ -591,12 +637,12 @@ export default function recrutor(){
 
                                 <div className=" files w100 orientationV spaceBetween ">
                                     <label>Présentation du poste en pdf:</label>
-                                    <input type="file"  name="avatar" accept="application/pdf,application/vnd.ms-excel" required onChange={(e)=>{setJobPresentationPDF(e.target.value);console.log(e.target.value)}}/>
+                                    <input type="file"  name="avatar" accept="application/pdf,application/vnd.ms-excel" required onChange={(e)=>{job_presentation_pdf_info( e);}}/>
                                 </div>
                                 
                                 <div className=" files w100 orientationV spaceBetween ">
                                     <label>Présentation du poste en video :</label>
-                                    <input type="file"  name="avatar" accept="video/mp4,video/x-m4v,video/*"  onChange={(e)=>{setJobPresentationVideo(e.target.value)}}/>
+                                    <input type="file"  name="avatar" accept="video/mp4,video/x-m4v,video/*"  onChange={(e)=>{setJobPresentationVideo(e.target.files[0])}}/>
                                 </div>
 
                                 <div className=" files w100 orientationV spaceBetween ">

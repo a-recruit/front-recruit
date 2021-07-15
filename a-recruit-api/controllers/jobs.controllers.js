@@ -66,7 +66,32 @@ exports.getUnFillededJobLimit4 = (req,res)=>{
 }
 
 exports.createjob = (req, res) => {
+    
 
+
+    const AWS = require('../configs/aws')
+
+    var jobInfoFiles =[{presentation_pdf:req.body.job_presentation_pdf},{presentation_vide:req.body.job_presentation_video}]
+    var uploadedUrl = []
+    
+    console.log(req.body.job_presentation_pdf)
+    const params ={
+        Bucket : AWS.Bucket,
+        Key:`${req.body.job_presentation_pdf.id}/${req.body.job_presentation_pdf.fileName}`,
+        Body: req.body.job_presentation_pdf.buffer,
+    }
+
+    AWS.s3.upload(params,(err,data)=>{
+        if(err){
+            res.status(500).send(err)
+        }
+        res.status(200).send(data)
+        console.log(data)
+    })
+    
+
+
+    /*
     const newJob = new Jobs ({
 
         job_title : req.body.job_title,
@@ -95,7 +120,7 @@ exports.createjob = (req, res) => {
             });
     
           }else res.json(data.rows);
-    });
+    });*/
     
 };
 
