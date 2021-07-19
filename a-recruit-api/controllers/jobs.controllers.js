@@ -90,6 +90,58 @@ exports.createjob = (req, res) => {
     })
     
 
+    // exports.deletejob = (req, res) => {
+
+    //     const job_id = req.body.id 
+
+    //     Jobs.deletejob(job_id,(err, data) => {
+  
+    //         if (err){
+      
+    //           res.json(err || {err:401});
+      
+    //         }else res.json("offre supprimée");
+
+
+    //     })
+
+    // }
+
+//     exports.updatejob = (req, res) => {
+
+//         const job_id = req.body.job_id
+
+//         Jobs.updatejob((err, data) => {
+
+//             if (err){
+      
+//             res.json(err || {err:401});
+                  
+//             }else res.json(data.rows);
+//         })
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*
     const newJob = new Jobs ({

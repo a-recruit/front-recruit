@@ -21,6 +21,10 @@ module.exports = app => {
 
     app.post("/createJob",upload,job.createjob);
 
+    // app.delete("/deleteJob", job.deletejob);
+
+    // app.put("/updateJob", job.updatejob);
+
 
 
   

@@ -92,5 +92,33 @@ Jobs.createjob = (newJob, result) => {
 }
 
 
+// Jobs.deletejob = (req, result, deleteJob) => {
+
+//      const job_id = deleteJob.job_id
+//   psql.query(`DELETE INTO jobs WHERE job_id=${job_id}`, (err, res) => {
+//     if (err) {
+//       return res.status(400).json(err) //|| {message: "L'offre n'a pas été supprimé"}
+//     }
+//     return res.status(200).json({ message: 'Votre offre d\'emploi a bien été supprimé !' })
+  
+//   })
+// };
+
+// Jobs.updatejob = (req, result, updateJob) => {
+
+//   const job_id = req.body.job_id
+  
+// psql.query(`UPDATE INTO jobs (job_title,job_contract_type,job_presentation_pdf,job_presentation_video,job_country,job_department,job_city,job_zip_code,job_required_level,job_required_grad, job_required_experience, job_creator_id, job_origin) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) WHERE job_id=${job_id} RETURNING job_id;`,
+// [updateJob.job_title,updateJob.job_contract_type,updateJob.job_presentation_pdf,updateJob.job_presentation_video,updateJob.job_country, updateJob.job_department, updateJob.job_city, updateJob.job_zip_code, updateJob.job_required_level, updateJob.job_required_grad, updateJob.job_required_experience, updateJob.job_creator_id, updateJob.job_origin],
+// (err, res) => {
+//  if (err) {
+//    return res.status(400).json(err) //|| {message: "L'offre n'a pas été supprimé"}
+//  }
+//  return res.status(200).json({ message: 'Votre offre d\'emploi a bien été modifié !' })
+
+// })
+// }
+
+
 
 module.exports = Jobs;

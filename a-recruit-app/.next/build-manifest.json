@@ -29,10 +29,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/interface/recruteur.js"
     ],
-    "/next/dist/pages/_error": [
+    "/interface/recruteur/allJobs": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/next/dist/pages/_error.js"
+      "static/chunks/pages/interface/recruteur/allJobs.js"
     ]
   },
   "ampFirstPages": []
