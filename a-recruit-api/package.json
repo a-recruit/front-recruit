@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "a-recruit-api",
   "version": "1.0.0",
   "description": "",
@@ -27,4 +28,10 @@
   },
   "author": "",
   "license": "ISC"
+=======
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.6.0"
+  }
+>>>>>>> 490df0ad0653568d24a9d6a7422c67fd4eaf51c1
 }

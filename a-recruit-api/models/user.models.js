@@ -2,6 +2,7 @@ const psql = require("../configs/db.js");
 
 // constructor
 const User = function(user) {
+<<<<<<< HEAD
   this.user_id = user.user_id;
   this.user_name = user.user_name;
   this.user_firstname = user.user_firstname;
@@ -116,6 +117,15 @@ User.createDb = (result)=>{
   });
 
 }
+=======
+  this.id = user.id;
+  this.name = user.name;
+  this.firstname = user.firstname;
+  this.mail = user.mail;
+};
+
+
+>>>>>>> 490df0ad0653568d24a9d6a7422c67fd4eaf51c1
 
 User.test = (result)=>{
 
@@ -129,6 +139,7 @@ User.test = (result)=>{
   });
 }
 
+<<<<<<< HEAD
 User.signup = (newUser,result)=>{ 
 
   psql.query('INSERT INTO users  (user_name,user_firstname,user_email,user_password,user_right) VALUES ($1,$2,$3,$4,$5) RETURNING user_id, user_name,user_firstname;',
@@ -147,12 +158,20 @@ User.createUserInfo = (user_id,result)=>{
   psql.query('INSERT INTO user_info  (user_id)  VALUES ($1) ;',
     [user_id], 
     (err, res) => {
+=======
+User.addData = (newuser, result)=> {
+
+  psql.query("INSERT INTO yohann (id, name, firstname, mail) VALUES ($1, $2, $3, $4)",
+  [newuser.id, newuser.name, newuser.firstname, newuser.mail], (err, res) => {
+    
+>>>>>>> 490df0ad0653568d24a9d6a7422c67fd4eaf51c1
     if (err) {
       result(err, null);
       return;
     }
     result(null,res);
   });
+<<<<<<< HEAD
 
 }
 
@@ -171,6 +190,10 @@ User.login = (lodedUser, result) => {
 
 
 
+=======
+}
+
+>>>>>>> 490df0ad0653568d24a9d6a7422c67fd4eaf51c1
 module.exports = User;
 
 

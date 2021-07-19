@@ -3,5 +3,9 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/interface/recruteur": "pages/interface/recruteur.js",
+<<<<<<< HEAD
   "/interface/recruteur/allJobs": "pages/interface/recruteur/allJobs.js"
+=======
+  "/": "pages/index.js"
+>>>>>>> 490df0ad0653568d24a9d6a7422c67fd4eaf51c1
 }
